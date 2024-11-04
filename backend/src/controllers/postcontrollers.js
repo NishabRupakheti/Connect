@@ -1,7 +1,27 @@
 const Post = require("../db/models/PostModel");
+const connectionModel = require("../db/models/connectionmodel");
 
-const getRequestHandler = (req, res) => {
-  res.send("Hello world");
+const getRequestHandler = async(req, res) => {
+
+  const {userId} = req.body
+
+  try {
+    const findConnection = await connectionModel.find({follower : userId}).select("following")
+
+    const followingUserIds = findConnection.map(conn => conn.following)
+    followingUserIds.push(userId)
+
+    const findPost = await Post.find({ userId : {$in: followingUserIds } }).sort({createdAt : -1})
+
+    res.status(200).json(findPost)
+
+  }
+  catch(err){
+    console.error("Error in get request handler",err)
+    res.json({
+      message : "Error fetching the data",
+    })
+  }
 };
 
 const postRequestHandler = async (req, res) => {
@@ -14,6 +34,7 @@ const postRequestHandler = async (req, res) => {
       comments,
     });
 
+     
     await newPost.save()
 
     res.status(201).json({
@@ -22,6 +43,9 @@ const postRequestHandler = async (req, res) => {
     })
 
   } catch (err) {
+    res.status(500).json({
+      message : "Internal server error"
+    })
     console.error("Error in post request handler", err);
   }
 };

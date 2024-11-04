@@ -30,9 +30,9 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { userName, passwordHash } = req.body;
+  const { email, passwordHash } = req.body;
   try {
-    const findUser = await User.findOne({ userName: userName });
+    const findUser = await User.findOne({ email: email });
     if (!findUser) {
       res.status(404).json({
         message: "User not found",
@@ -78,7 +78,7 @@ const login = async (req, res) => {
 
     // res.status(200).json(findUser)
   } catch (err) {
-    console.error("Error in login funciton");
+    console.error("Error in login funciton",err);
   }
 };
 

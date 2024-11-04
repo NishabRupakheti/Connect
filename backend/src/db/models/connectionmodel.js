@@ -30,5 +30,6 @@ connectionSchema.index(
   }
 );
 
-export const Connection = mongoose.model("Connection",connectionSchema)
+const Connection = mongoose.model("Connection",connectionSchema)
+module.exports = Connection
 
