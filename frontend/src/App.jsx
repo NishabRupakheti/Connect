@@ -1,48 +1,61 @@
+import AuthNav from "./Components/auth/AuthNav"
 import Login from "./Components/auth/Login"
 import Reg from "./Components/auth/Reg"
-import Friends from "./Components/Friends"
-import Home from "./Components/Home"
-import Navbar from "./Components/Navbar"
-import People from "./Components/People"
-import Post from "./Components/Post"
+import Friends from "./pages/Friends"
+import Home from "./pages/Home"
+import People from "./pages/People"
+import Post from "./pages/Post"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-
-const pageroutes = createBrowserRouter([
-  {
-    path:"/",
-    element: <> <Navbar/> <Home/> </>
-  },
-  {
-    path:"/post",
-    element: <> <Navbar/> <Post/> </>
-  },
-  {
-    path: "/friends",
-    element: <> <Navbar/> <Friends/> </>
-  },
-  {
-    path: "/people",
-    element: <> <Navbar/> <People/> </>
-  }
-])
-
-const authenticationRoutes = createBrowserRouter([
-  {
-    path: "/login",
-    element: <Login/>
-  },
-  {
-    path: "/register",
-    element: <Reg/>
-  }
-])
+import { useState } from "react"
+import RootLayout from "./Layout/RootLayout"
+import Authlayout from "./Layout/Authlayout"
 
 function App() {
+
+  const[isAuthenticated, setIsAuthenticate] = useState(true)
+
+  const router = createBrowserRouter([
+    {
+      path : "/",
+      element: <RootLayout/>,
+      children: [
+        {
+          path : "",
+        element: <Home/>
+        },
+        {
+          path : "post",
+          element: <Post/>
+        },
+        {
+          path : "people",
+          element: <People/>
+        },
+        {
+          path : "friends",
+          element: <Friends/>
+        }
+      ]
+    },
+    {
+      path : "auth",
+      element: <Authlayout />,
+      children:[
+        {
+          path: "",
+          element: <Login/>
+        },
+        {
+          path: "register",
+          element: <Reg/>
+        }
+      ]
+    }
+  ])
+
   return(
     <>
-      <RouterProvider router={pageroutes} />
-      <RouterProvider router={authenticationRoutes} />
+      <RouterProvider router={router} />
     </>
   )
 }
