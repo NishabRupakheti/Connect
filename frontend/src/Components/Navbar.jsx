@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/Context";
 
 const Navbar = () => {
+
+  const {userName} = useAuth();
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="#">
-            UserName
+            {userName}
           </Link>
           <button
             className="navbar-toggler"

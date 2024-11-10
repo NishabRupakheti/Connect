@@ -1,18 +1,18 @@
-import AuthNav from "./Components/auth/AuthNav"
 import Login from "./Components/auth/Login"
 import Reg from "./Components/auth/Reg"
 import Friends from "./pages/Friends"
 import Home from "./pages/Home"
 import People from "./pages/People"
 import Post from "./pages/Post"
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { useState } from "react"
+import { createBrowserRouter, Navigate, RouterProvider  } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout"
 import Authlayout from "./Layout/Authlayout"
+import ProtectedRoute from "./Components/ProtectedRoute"
+import { useAuth } from "./context/Context"
 
 function App() {
 
-  const[isAuthenticated, setIsAuthenticate] = useState(true)
+  const {isAuthenticated} = useAuth();
 
   const router = createBrowserRouter([
     {
@@ -21,25 +21,41 @@ function App() {
       children: [
         {
           path : "",
-        element: <Home/>
+          element: (
+            <ProtectedRoute>
+              <Home/>
+            </ProtectedRoute>
+          )
         },
         {
           path : "post",
-          element: <Post/>
+          element: (
+            <ProtectedRoute>
+              <Post/>
+            </ProtectedRoute>
+          )
         },
         {
           path : "people",
-          element: <People/>
+          element: (
+            <ProtectedRoute>
+              <People/>
+            </ProtectedRoute>
+          )
         },
         {
           path : "friends",
-          element: <Friends/>
+          element: (
+            <ProtectedRoute>
+              <Friends/>
+            </ProtectedRoute>
+          )
         }
       ]
     },
     {
       path : "auth",
-      element: <Authlayout />,
+      element: !isAuthenticated ? <Authlayout/> : <Navigate to="/"/> ,
       children:[
         {
           path: "",
