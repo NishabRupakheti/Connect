@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/Context";
 
 const Navbar = () => {
-  const { userName } = useAuth();
+  const { userName , setIsAuthenticated } = useAuth();
+
+  const handleLogout = ()=>{
+    setIsAuthenticated(false)
+    localStorage.clear()
+  }
 
   return (
     <>
@@ -66,7 +71,7 @@ const Navbar = () => {
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" type="submit">
+              <button className="btn btn-outline-success" onClick={handleLogout} >
                 Logout
               </button>
             </form>
