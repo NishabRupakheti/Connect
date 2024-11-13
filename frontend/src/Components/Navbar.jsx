@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/Context";
 
 const Navbar = () => {
-
-  const {userName} = useAuth();
+  const { userName } = useAuth();
 
   return (
     <>
