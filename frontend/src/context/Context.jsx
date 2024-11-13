@@ -7,6 +7,7 @@ export const ContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("Nishab  Rupakheti");
 
+  
   return (
     <Context.Provider value={{ isAuthenticated, userName }}>
       {children}
