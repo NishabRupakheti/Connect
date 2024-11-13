@@ -1,20 +1,64 @@
-import React , {useState} from 'react'
-
+import React, { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../../context/Context";
 const Login = () => {
+  const { setIsAuthenticated } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  function removeStatus() {
+    setTimeout(() => {
+      setStatus("");
+    }, 3000);
+  }
 
-  const handleSubmit = (e) => {
-   
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://127.0.0.1:3000/auth/login", {
+        email: email,
+        passwordHash: password,
+      });
+
+      const token = response.data.token;
+
+      if (token) {
+        localStorage.setItem("secretToken", token);
+        setIsAuthenticated(true);
+      }
+      console.log(response);
+    } catch (err) {
+      let status = err.response.data.message;
+      setStatus(status);
+      setPassword("");
+      removeStatus();
+    }
   };
 
   return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '90vh' , fontFamily:"Barlow" , fontWeight:"400" }} >
-        <form onSubmit={handleSubmit} className="p-5 border rounded shadow" style={{ width: '100%', maxWidth: '500px' }}>
-          <h2 className="text-center mb-4" style={{fontFamily: "cursive"}} >Login</h2>
+    <>
+      {status && (
+        <div className="container text-center alert mt-4 alert-danger">
+          {status}
+        </div>
+      )}
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ fontFamily: "Barlow", fontWeight: "400", marginTop: "3.5rem" }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          className="p-5 border rounded shadow"
+          style={{ width: "100%", maxWidth: "500px" }}
+        >
+          <h2 className="text-center mb-4" style={{ fontFamily: "cursive" }}>
+            Login
+          </h2>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email address</label>
+            <label htmlFor="email" className="form-label">
+              Email address
+            </label>
             <input
               type="email"
               id="email"
@@ -25,9 +69,11 @@ const Login = () => {
               required
             />
           </div>
-  
+
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -38,13 +84,14 @@ const Login = () => {
               required
             />
           </div>
-  
+
           <button type="submit" className="btn btn-primary w-100">
             Log In
           </button>
         </form>
       </div>
-  )
-}
+    </>
+  );
+};
 
-export default Login
+export default Login;
