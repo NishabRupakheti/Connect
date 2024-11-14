@@ -29,56 +29,40 @@ const register = async (req, res) => {
   }
 };
 
+
 const login = async (req, res) => {
   const { email, passwordHash } = req.body;
+
   try {
     const findUser = await User.findOne({ email: email });
     if (!findUser) {
-      res.status(404).json({
-        message: "User not found",
-      });
+      return res.status(404).json({ message: "User not found" });
     }
 
     bcrypt.compare(passwordHash, findUser.passwordHash, (err, result) => {
-      if (err) {
-        return res.status(401).json({
-          message: "Invalid password",
-        });
-      }
-      if (result == false) {
-        return res.status(401).json({
-          message: "Invalid password",
-        });
+      if (err || !result) {
+        return res.status(401).json({ message: "Invalid password" });
       }
 
-      if (result) {
-        payload = {
-          userName: findUser.userName,
-          email: findUser.email,
-        };
+      const payload = {
+        userId: findUser._id,
+        userName: findUser.userName,
+        email: findUser.email,
+      };
 
-        jwt.sign(
-          payload,
-          jwtkey,
-          (err, token) => {
-            if (err) {
-              console.log("Error while generating Jsonwebtoken", err);
-              return res.status(500).json({
-                message: "Internal server error",
-              });
-            }
-            res.status(200).json({
-              token: token,
-            });
-          },
-          { expiresIn: "1hr" }
-        );
-      }
+      jwt.sign(payload, jwtkey, { expiresIn: '1h' }, (err, token) => {
+        if (err) {
+          console.error("Error while generating Jsonwebtoken", err);
+          return res.status(500).json({ message: "Internal server error" });
+        }
+        
+        res.status(200).json({ token: token });
+      });
     });
 
-    // res.status(200).json(findUser)
   } catch (err) {
-    console.error("Error in login funciton",err);
+    console.error("Error in login function", err);
+    res.status(500).json({ message: "Server error during login" });
   }
 };
 
