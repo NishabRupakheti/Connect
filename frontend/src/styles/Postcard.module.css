@@ -1,0 +1,14 @@
+.postCard {
+    font-family: "Barlow", serif;
+    font-weight: 300;
+    width: 40vw;
+    font-size: 1.7rem;
+}
+
+.lbtn{
+    width: 45%;
+}
+
+.rbtn{
+    width: 45%;
+}
