@@ -6,10 +6,10 @@ const Context = createContext();
 export const ContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userName, setUserName] = useState("Nishab  Rupakheti");
+  const [userName, setUserName] = useState("Hardcode");
   
   return (
-    <Context.Provider value={{ isAuthenticated, setIsAuthenticated , userName }}>
+    <Context.Provider value={{ isAuthenticated, setIsAuthenticated , userName , posts , setPosts , setUserName}}>
       {children}
     </Context.Provider>
   );

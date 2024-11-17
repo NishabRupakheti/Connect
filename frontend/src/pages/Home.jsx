@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineLike } from "react-icons/ai";
 import { LiaCommentSolid } from "react-icons/lia";
-import styles from '../styles/Postcard.module.css'
+import styles from "../styles/Postcard.module.css";
+import { useAuth } from "../context/Context";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-
+  const [hasPost, setHasPost] = useState(true);
+  const { posts , setPosts , setUserName } = useAuth();
   const getFunction = async () => {
     const token = localStorage.getItem("secretToken");
     try {
@@ -15,16 +16,18 @@ const Home = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data[1]);
-      setPosts(response.data);
+
+      console.log(response.data);
+      setPosts(response.data.findPost);
+      setUserName(response.data.userInfo)
+      
+      console.log(posts);
+      
+
     } catch (err) {
       console.log("Failed to fetch the data", err);
     }
   };
-
-  const clickPost = ()=>{
-    alert("Popup")
-  }
 
   useEffect(() => {
     getFunction();
@@ -35,7 +38,7 @@ const Home = () => {
       <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3  flex-column ">
         {posts.map((post, index) => {
           return (
-            <div className={`card mt-5 ${styles['postCard']}`} key={index} onClick={clickPost} >
+            <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
               <div className="card-body">
                 <h5 className="card-title"> {post.userId.userName} </h5>
                 <p className="card-text">{post.message}</p>
@@ -48,12 +51,58 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="btns text-center">
-                <a href="#" className={`btn m-1 btn-outline-dark ${styles['lbtn']} `}>
-                  like
-                </a>
-                <a href="#" className={`btn m-1 btn-outline-dark ${styles['rbtn']} `}>
-                  comment
-                </a>
+                  <a
+                    href="#"
+                    className={`btn m-1 btn-outline-dark ${styles["lbtn"]} `}
+                  >
+                    like
+                  </a>
+
+                  <button
+                    type="button"
+                    className={`btn m-1 btn-outline-dark ${styles["rbtn"]} `}
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    Comment
+                  </button>
+
+                  <div
+                    className="modal fade"
+                    id="exampleModal"
+                    tabIndex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="exampleModalLabel">
+                            Modal title
+                          </h1>
+                          <button
+                            type="button"
+                            className="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div className="modal-body">...</div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button type="button" className="btn btn-primary">
+                            Save changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

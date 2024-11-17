@@ -4,7 +4,7 @@ const User = require('../db/models/USERModel')
 
 const getRequestHandler = async(req, res) => {
 
-  const {userId} = req.user
+  const {userId , userName } = req.user
 
   try {
     const findConnection = await connectionModel.find({follower : userId}).select("following")
@@ -14,7 +14,10 @@ const getRequestHandler = async(req, res) => {
 
     const findPost = await Post.find({ userId : {$in: followingUserIds } }).sort({createdAt : -1}).populate('userId','userName email')
 
-    res.status(200).json(findPost)
+    res.status(200).json({
+      findPost : findPost,
+      userInfo : userName
+    })
   }
   catch(err){
     console.error("Error in get request handler",err)
