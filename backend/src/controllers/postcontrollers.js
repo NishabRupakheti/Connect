@@ -1,6 +1,5 @@
 const Post = require("../db/models/PostModel");
 const connectionModel = require("../db/models/connectionmodel");
-const User = require('../db/models/USERModel')
 
 const getRequestHandler = async(req, res) => {
 
@@ -12,7 +11,7 @@ const getRequestHandler = async(req, res) => {
     const followingUserIds = findConnection.map(conn => conn.following)
     followingUserIds.push(userId)
 
-    const findPost = await Post.find({ userId : {$in: followingUserIds } }).sort({createdAt : -1}).populate('userId','userName email')
+    const findPost = await Post.find({ userId : {$in: followingUserIds } }).sort({createdAt : -1}).populate('userId','userName email').populate("comments.userId","userName")
 
     res.status(200).json({
       findPost : findPost,

@@ -4,10 +4,10 @@ import { AiOutlineLike } from "react-icons/ai";
 import { LiaCommentSolid } from "react-icons/lia";
 import styles from "../styles/Postcard.module.css";
 import { useAuth } from "../context/Context";
+import Comments from "../Components/Comments";
 
 const Home = () => {
-  const [hasPost, setHasPost] = useState(true);
-  const { posts , setPosts , setUserName } = useAuth();
+  const { posts, setPosts, setUserName } = useAuth();
   const getFunction = async () => {
     const token = localStorage.getItem("secretToken");
     try {
@@ -19,10 +19,7 @@ const Home = () => {
 
       console.log(response.data);
       setPosts(response.data.findPost);
-      setUserName(response.data.userInfo)
-      
-      console.log(posts);
-      
+      setUserName(response.data.userInfo);
 
     } catch (err) {
       console.log("Failed to fetch the data", err);
@@ -77,8 +74,11 @@ const Home = () => {
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <h1 className="modal-title fs-5" id="exampleModalLabel">
-                            Modal title
+                          <h1
+                            className="modal-title fs-5"
+                            id="exampleModalLabel"
+                          >
+                            {post.userId.userName}
                           </h1>
                           <button
                             type="button"
@@ -87,7 +87,16 @@ const Home = () => {
                             aria-label="Close"
                           ></button>
                         </div>
-                        <div className="modal-body">...</div>
+                        <div className="modal-body">
+                          <div
+                            className={`card mt-5 ${styles[".smallPostCard"]}`}
+                            key={index}
+                          >
+                            {/* inside the modal */}
+                            <Comments comments={post.comments} />
+                            {/* inside the modal */}
+                          </div>
+                        </div>
                         <div className="modal-footer">
                           <button
                             type="button"

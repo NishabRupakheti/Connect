@@ -5,6 +5,13 @@
     font-size: 1.7rem;
 }
 
+.smallPostCard{
+    font-family: "Barlow", serif;
+    font-weight: 300;
+    width: 30vw;
+    font-size: 1.7rem;
+}
+
 .lbtn{
     width: 45%;
 }

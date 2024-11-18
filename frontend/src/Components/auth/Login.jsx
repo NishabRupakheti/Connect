@@ -27,7 +27,6 @@ const Login = () => {
         localStorage.setItem("secretToken", token);
         setIsAuthenticated(true);
       }
-      console.log(response);
     } catch (err) {
       let status = err.response.data.message;
       setStatus(status);

@@ -22,7 +22,7 @@ const AuthNav = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <NavLink to="" className="nav-link" activeClassName="active">
+              <NavLink to="" className="nav-link" activeclassname="active">
                 Login
               </NavLink>
             </li>
@@ -30,7 +30,7 @@ const AuthNav = () => {
               <NavLink
                 to="register"
                 className="nav-link"
-                activeClassName="active"
+                activeclassname="active"
               >
                 Register
               </NavLink>
