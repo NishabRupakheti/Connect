@@ -7,14 +7,12 @@ import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
 
 const Home = () => {
-  const { posts = [], setPosts, setUserName } = useAuth();
+  const { posts = [], setPosts, setUserName , token} = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
-  const [like, setLike] = useState(false);
-  const [likeMessage, setLikeMessage] = useState("");
 
-  const token = localStorage.getItem("secretToken");
+
 
   const getFunction = async () => {
     try {
@@ -25,6 +23,7 @@ const Home = () => {
       });
       setPosts(response.data.findPost);
       setUserName(response.data.userInfo);
+      console.log(posts)
     } catch (err) {
       console.log("Failed to fetch the data", err);
     }

@@ -7,9 +7,18 @@ export const ContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
+  const token = localStorage.getItem("secretToken");
+  const [status, setStatus] = useState("");
+  
+  function removeStatus() {
+    setTimeout(() => {
+      setStatus("");
+    }, 3000);
+  }
+
   
   return (
-    <Context.Provider value={{ isAuthenticated, setIsAuthenticated , userName , posts , setPosts , setUserName}}>
+    <Context.Provider value={{ isAuthenticated, setIsAuthenticated , userName , posts , setPosts , setUserName , token , status , setStatus , removeStatus }}>
       {children}
     </Context.Provider>
   );
