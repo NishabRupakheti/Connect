@@ -16,7 +16,8 @@ const increaseLike = async (req,res)=>{
 }
 
 const increaseComment = async (req,res)=>{
-    const {postObjID,userId,message} = req.body
+    const {postObjID,message} = req.body
+    const {userId} = req.user
 
     try{
         const findpost = await Post.findOne({_id : postObjID})
