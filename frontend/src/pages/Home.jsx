@@ -10,7 +10,10 @@ const Home = () => {
   const { posts = [], setPosts, setUserName } = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [comment, setComment] = useState("")
+  const [comment, setComment] = useState("");
+  const [like, setLike] = useState(false);
+  const [likeMessage, setLikeMessage] = useState("");
+
   const token = localStorage.getItem("secretToken");
 
   const getFunction = async () => {
@@ -27,29 +30,53 @@ const Home = () => {
     }
   };
 
+  const handleComment = async (postObjID) => {
+    if (comment.length !== 0) {
+      try {
+        const response = await axios.put(
+          "http://localhost:3000/post/comment",
+          {
+            postObjID: postObjID,
+            message: comment,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+        setComment("");
+        handleCloseModal();
+        getFunction();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
- const handleComment = async (postObjID) => {
-  if (comment.length !== 0) {
+  const handleLike = async (postObjID) => {
     try {
-      const response = await axios.put(
-        'http://localhost:3000/post/comment',
+      await axios.put(
+        "http://localhost:3000/post/like",
         {
-          "postObjID": postObjID,
-          "message" : comment
-      },
+          postObjID,
+        },
         {
           headers: {
-            Authorization: `Bearer ${token}` 
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-}
+      )
 
+      setTimeout(() => {
+        getFunction();
+      }, 500);
+
+    } catch (err) {
+      console.log("Error on the like function", err);
+    }
+  };
 
   useEffect(() => {
     getFunction();
@@ -63,6 +90,7 @@ const Home = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setActivePost(null);
+    setComment("");
   };
 
   return (
@@ -82,17 +110,18 @@ const Home = () => {
                 </div>
               </div>
               <div className="btns text-center">
-                <a
+                <button
+                  onClick={()=>handleLike(post._id)}
                   href="#"
                   className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
                 >
                   like
-                </a>
+                </button>
 
                 <button
                   type="button"
                   className={`btn m-1 btn-outline-dark ${styles["rbtn"]}`}
-                  onClick={() => handleOpenModal(post)} // Open the modal for the clicked post
+                  onClick={() => handleOpenModal(post)}
                 >
                   Comment
                 </button>
@@ -132,13 +161,13 @@ const Home = () => {
                 ))}
               </ul>
             </div>
-            <div class="input-group mb-3 mt-3">
+            <div className="input-group mb-3 mt-3">
               <input
-              value={comment}
-              onChange={(e)=>setComment(e.target.value)}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
                 type="text"
-                class="form-control"
-                placeholder=""
+                className="form-control"
+                placeholder="Enter a comment"
                 aria-label="Example text with button addon"
                 aria-describedby="button-addon1"
               />
@@ -148,7 +177,12 @@ const Home = () => {
             <Button variant="secondary" onClick={handleCloseModal}>
               Close
             </Button>
-            <Button variant="primary" onClick={()=>handleComment(activePost._id)}>Comment</Button>
+            <Button
+              variant="primary"
+              onClick={() => handleComment(activePost._id)}
+            >
+              Comment
+            </Button>
           </Modal.Footer>
         </Modal>
       )}
