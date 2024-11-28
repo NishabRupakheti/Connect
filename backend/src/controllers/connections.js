@@ -1,7 +1,10 @@
 const connectionModel = require('../db/models/connectionmodel')
 
 const connect = async (req, res) => {
-  const { follower, following } = req.body;
+  const { following } = req.body;
+  const { userId } = req.user
+
+  const follower = userId
 
   try {
     const newConnection = new connectionModel({
