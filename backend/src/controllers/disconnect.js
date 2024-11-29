@@ -1,6 +1,9 @@
 const connectionModel = require('../db/models/connectionmodel')
 const disconnect = async (req,res)=>{
-    const { follower, following } = req.body;
+    const { following } = req.body;
+    const { userId } = req.user;
+
+    const follower = userId
 
     try{
         await connectionModel.deleteOne({

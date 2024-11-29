@@ -1,30 +1,48 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { useAuth } from "../context/Context";
 
 const Friends = () => {
-
-  const {token} = useAuth();
+  const { token } = useAuth();
 
   const [friends, setFriends] = useState([]);
 
-  const removeFriend = (index) => {
+  const removeFriend = async (index, followingId) => {
     setFriends(friends.filter((_, i) => i !== index));
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/friend/disconnect",
+        { follower: followingId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error disconnecting friend:", error);
+    }
   };
 
-  const getFriends = async ()=>{
-     const response = await axios.get("http://localhost:3000/friend/connection",{
-      headers:{
-        Authorization : `Bearer ${token}`
+  const getFriends = async () => {
+    const response = await axios.get(
+      "http://localhost:3000/friend/connection",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-     })
-    setFriends(response.data)
+    );
+    setFriends(response.data);
+    console.log(friends);
+  };
 
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     getFriends();
-  },[])
+  }, []);
 
   return (
     <div className="container w-50 mt-4">
@@ -39,7 +57,7 @@ const Friends = () => {
             <div className="card-body">
               <p className="card-text">{friend.email}</p>
               <button
-                onClick={() => removeFriend(index)}
+                onClick={() => removeFriend(index, friend._id)}
                 className="btn btn-danger"
               >
                 Remove friend
