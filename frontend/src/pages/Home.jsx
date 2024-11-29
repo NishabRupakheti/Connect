@@ -7,12 +7,10 @@ import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
 
 const Home = () => {
-  const { posts = [], setPosts, setUserName , token} = useAuth();
+  const { posts = [], setPosts, setUserName, token } = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
-
-
 
   const getFunction = async () => {
     try {
@@ -23,7 +21,7 @@ const Home = () => {
       });
       setPosts(response.data.findPost);
       setUserName(response.data.userInfo);
-      console.log(posts)
+      
     } catch (err) {
       console.log("Failed to fetch the data", err);
     }
@@ -66,12 +64,11 @@ const Home = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-      )
+      );
 
       setTimeout(() => {
         getFunction();
       }, 500);
-
     } catch (err) {
       console.log("Error on the like function", err);
     }
@@ -99,6 +96,15 @@ const Home = () => {
           <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
             <div className="card-body">
               <h5 className="card-title"> {post.userId.userName} </h5>
+              <span style={{ fontSize: "0.5em" }}>
+                {new Intl.DateTimeFormat("en-US", {
+                  weekday: "short",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }).format(new Date(post.createdAt))}
+              </span>
+
               <p className="card-text">{post.message}</p>
               <div className="container d-flex justify-content-between p-2">
                 <div className="likes">
@@ -110,7 +116,7 @@ const Home = () => {
               </div>
               <div className="btns text-center">
                 <button
-                  onClick={()=>handleLike(post._id)}
+                  onClick={() => handleLike(post._id)}
                   href="#"
                   className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
                 >
@@ -154,8 +160,21 @@ const Home = () => {
               <ul>
                 {activePost.comments.map((comment, commentIndex) => (
                   <li key={commentIndex}>
-                    <h6 className="card-title">{comment.userId.userName}</h6>
+                    <h6 className="card-title mt-2">
+                      {comment.userId.userName}
+                    </h6>
+                    <span style={{ fontSize: "0.5em" }}>
+                      {new Intl.DateTimeFormat("en-US", {
+                        weekday: "short",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric"
+                      }).format(new Date(comment.createdAt))}
+                    </span>
                     <p className="card-text">{comment.message}</p>
+                    <hr />
                   </li>
                 ))}
               </ul>

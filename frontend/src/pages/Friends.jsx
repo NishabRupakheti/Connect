@@ -8,12 +8,10 @@ const Friends = () => {
   const [friends, setFriends] = useState([]);
 
   const removeFriend = async (index, followingId) => {
-    setFriends(friends.filter((_, i) => i !== index));
-
     try {
       const response = await axios.post(
         "http://localhost:3000/friend/disconnect",
-        { follower: followingId },
+        { following : followingId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
