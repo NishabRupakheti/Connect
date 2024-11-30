@@ -15,7 +15,7 @@ const getRequestHandler = async (req, res) => {
     const findPost = await Post.find({ userId: { $in: followingUserIds } })
       .sort({ createdAt: -1 })
       .populate("userId", "userName email")
-      .populate("comments.userId", "userName");
+      .populate("comments.userId", "userName")
 
     res.status(200).json({
       findPost: findPost,

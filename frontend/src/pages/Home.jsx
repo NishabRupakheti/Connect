@@ -11,6 +11,7 @@ const Home = () => {
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
+  const [likeState , setlikeState] = useState(false)
 
   const getFunction = async () => {
     try {
@@ -66,9 +67,7 @@ const Home = () => {
         }
       );
 
-      setTimeout(() => {
-        getFunction();
-      }, 500);
+      getFunction();
     } catch (err) {
       console.log("Error on the like function", err);
     }
@@ -120,7 +119,9 @@ const Home = () => {
                   href="#"
                   className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
                 >
-                  like
+                  {
+                    likeState ? "Unlike" : "Like"
+                  }
                 </button>
 
                 <button
