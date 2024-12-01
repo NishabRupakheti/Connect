@@ -13,10 +13,7 @@ const givefriends = async (req, res) => {
       _id: { $nin: [...followedIds, userId] },
     }).select("userName email");
 
-    res.status(200).json({
-      message: "Potential friends retrieved successfully",
-      potentialFriends,
-    });
+    res.status(200).json(potentialFriends);
   } catch (err) {
     console.log("Error fetching people ...", err);
     res.status(500).json({

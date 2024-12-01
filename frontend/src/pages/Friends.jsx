@@ -19,6 +19,8 @@ const Friends = () => {
         }
       );
 
+      getFriends();
+
       console.log(response);
     } catch (error) {
       console.error("Error disconnecting friend:", error);
@@ -58,7 +60,7 @@ const Friends = () => {
                 onClick={() => removeFriend(index, friend._id)}
                 className="btn btn-danger"
               >
-                Remove friend
+                Unfollow
               </button>
             </div>
           </div>
