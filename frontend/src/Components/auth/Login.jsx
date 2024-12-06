@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/Context";
+import { Link } from "react-router-dom";
+
 const Login = () => {
   const { setIsAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
@@ -87,6 +89,9 @@ const Login = () => {
           <button type="submit" className="btn btn-primary w-100">
             Log In
           </button>
+          <div className="container mt-3">
+            Don't have an account?  <Link to="register">Sign Up</Link>
+          </div>
         </form>
       </div>
     </>
