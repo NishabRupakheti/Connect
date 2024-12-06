@@ -11,7 +11,7 @@ const Home = () => {
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
-  const [likeState , setlikeState] = useState(false)
+  const [likeState, setlikeState] = useState(false);
 
   const getFunction = async () => {
     try {
@@ -22,7 +22,6 @@ const Home = () => {
       });
       setPosts(response.data.findPost);
       setUserName(response.data.userInfo);
-      
     } catch (err) {
       console.log("Failed to fetch the data", err);
     }
@@ -90,59 +89,76 @@ const Home = () => {
 
   return (
     <>
-      <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
-        {posts.map((post, index) => (
-          <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
-            <div className="card-body">
-              <h5 className="card-title"> {post.userId.userName} </h5>
-              <span style={{ fontSize: "0.5em" }}>
-                {new Intl.DateTimeFormat("en-US", {
-                  weekday: "short",
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                }).format(new Date(post.createdAt))}
-              </span>
+      {posts.length > 0 ? (
+        <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
+          {posts.map((post, index) => (
+            <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
+              <div className="card-body">
+                <h5 className="card-title"> {post.userId.userName} </h5>
+                <span style={{ fontSize: "0.5em" }}>
+                  {new Intl.DateTimeFormat("en-US", {
+                    weekday: "short",
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }).format(new Date(post.createdAt))}
+                </span>
 
-              <p className="card-text">{post.message}</p>
-              <div className="container d-flex justify-content-between p-2">
-                <div className="likes">
-                  <AiOutlineLike /> <span>{post.likeCount}</span>
+                <p className="card-text">{post.message}</p>
+                <div className="container d-flex justify-content-between p-2">
+                  <div className="likes">
+                    <AiOutlineLike /> <span>{post.likeCount}</span>
+                  </div>
+                  <div className="comments">
+                    <LiaCommentSolid /> <span>{post.comments.length}</span>
+                  </div>
                 </div>
-                <div className="comments">
-                  <LiaCommentSolid /> <span>{post.comments.length}</span>
-                </div>
-              </div>
-              <div className="btns text-center">
-                <button
-                  onClick={() => handleLike(post._id)}
-                  href="#"
-                  className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
-                >
-                  {
-                    likeState ? "Unlike" : "Like"
-                  }
-                </button>
+                <div className="btns text-center">
+                  <button
+                    onClick={() => handleLike(post._id)}
+                    href="#"
+                    className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
+                  >
+                    {likeState ? "Unlike" : "Like"}
+                  </button>
 
-                <button
-                  type="button"
-                  className={`btn m-1 btn-outline-dark ${styles["rbtn"]}`}
-                  onClick={() => handleOpenModal(post)}
-                >
-                  Comment
-                </button>
+                  <button
+                    type="button"
+                    className={`btn m-1 btn-outline-dark ${styles["rbtn"]}`}
+                    onClick={() => handleOpenModal(post)}
+                  >
+                    Comment
+                  </button>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
+      ) : (
+        <div className="container mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
+          <div className="card mt-5">
+            <div className="card-body" style={{ border: "none" }}>
+              <h5 className="card-title" style={{ fontFamily: "cursive" }}>
+                No posts yet 🍃🍃
+              </h5>
+            </div>
           </div>
-        ))}
-      </div>
+          <p
+            className="card alert alert-info mt-2"
+            style={{ fontFamily: "cursive" }}
+          >
+            Try following some people or create your own
+          </p>
+        </div>
+      )}
+
       {activePost && (
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>{activePost.userId.userName}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className={`card mt-2 ${styles[".smallPostCard"]}`}>
+            <div className={`card mt-4`} style={{ fontFamily: "PT Sans" }}>
               <div className="card-body">
                 <h5 className="card-title">{activePost.userId.userName}</h5>
                 <p className="card-text">{activePost.message}</p>
@@ -157,29 +173,40 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             <div className="card mt-3">
-              <ul>
-                {activePost.comments.map((comment, commentIndex) => (
-                  <li key={commentIndex}>
-                    <h6 className="card-title mt-2">
-                      {comment.userId.userName}
-                    </h6>
-                    <span style={{ fontSize: "0.5em" }}>
-                      {new Intl.DateTimeFormat("en-US", {
-                        weekday: "short",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric"
-                      }).format(new Date(comment.createdAt))}
-                    </span>
-                    <p className="card-text">{comment.message}</p>
-                    <hr />
-                  </li>
-                ))}
+              <ul className="list-group list-group-flush">
+                {activePost.comments.length > 0 ? (
+                  activePost.comments.map((comment, commentIndex) => (
+                    <li key={commentIndex} style={{listStyle:"none", padding:"12px", fontSize:"16px", fontFamily:"PT Sans"}} >
+                      <h6 className="card-title mt-2">
+                        {comment.userId.userName}
+                      </h6>
+                      <span style={{ fontSize: "0.5em" }}>
+                        {new Intl.DateTimeFormat("en-US", {
+                          weekday: "short",
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                        }).format(new Date(comment.createdAt))}
+                      </span>
+                      <p className="card-text">{comment.message}</p>
+                      <hr />
+                    </li>
+                  ))
+                ) : (
+                  <h5
+                    className="text-center p-2"
+                    style={{ fontFamily: "barlow" }}
+                  >
+                    No comments yet
+                  </h5>
+                )}
               </ul>
             </div>
+
             <div className="input-group mb-3 mt-3">
               <input
                 value={comment}

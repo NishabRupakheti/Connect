@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/Context";
+import { CiBookmarkPlus } from "react-icons/ci";
+
 
 const Friends = () => {
   const { token } = useAuth();
@@ -45,9 +47,12 @@ const Friends = () => {
   }, []);
 
   return (
-    <div className="container w-50 mt-4">
+    <div className="container w-50 mt-4" style={{ fontSize: "20px" , fontFamily: "Barlow" }} >
       {friends.length === 0 ? (
-        <p>No friends to display</p>
+        <>
+          <div className="alert alert-info text-center">No friends yet🍃🍃</div>
+          <p className="text-center text-uppercase" >Try following some people <CiBookmarkPlus /> </p>
+        </>
       ) : (
         friends.map((friend, index) => (
           <div key={index} className="card mb-3">

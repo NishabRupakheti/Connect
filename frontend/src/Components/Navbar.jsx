@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary" >
+      <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ fontFamily: "Barlow" , fontSize: "20px" }} >
         <div className="container-fluid">
           <Link className="navbar-brand" to="#">
             {userName}

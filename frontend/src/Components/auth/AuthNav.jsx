@@ -6,7 +6,7 @@ const AuthNav = () => {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light bg-light"
-      style={{ fontFamily: "Barlow" }}
+      style={{ fontFamily: "Barlow" , fontSize: "20px" }}
     >
       <div className="container">
         <MdOutlineStarBorder className="star" />

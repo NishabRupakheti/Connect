@@ -38,7 +38,7 @@ const Post = () => {
 
   return (
     <>
-    <div className="container d-flex justify-content-center mt-5">
+    <div className="container d-flex justify-content-center mt-5" style={{ fontSize: "25px" , fontFamily: "Barlow" }} >
       <div className="card p-3 " style={{ width: "30rem" }}>
         <div className="card-body">
           <h5 className="card-title p-2"> What's on your mind </h5>
@@ -52,7 +52,7 @@ const Post = () => {
                 id="floatingTextarea2"
                 style={{ height: "100px" }}
               ></textarea>
-              <label htmlFor="floatingTextarea2">Share something</label>
+              <label htmlFor="floatingTextarea2" style={{ fontSize: "15px" }} >Share something</label>
             </div>
           </div>
           <a
