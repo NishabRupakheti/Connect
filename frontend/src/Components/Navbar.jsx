@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/Context";
 
 const Navbar = () => {
-  const { userName , setIsAuthenticated } = useAuth();
+  const { userName, setIsAuthenticated } = useAuth();
 
-  const handleLogout = ()=>{
-    setIsAuthenticated(false)
-    localStorage.clear()
-  }
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.clear();
+  };
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ fontFamily: "Barlow" , fontSize: "20px" }} >
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary"
+        style={{ fontFamily: "Barlow", fontSize: "20px" }}
+      >
         <div className="container-fluid">
           <Link className="navbar-brand" to="#">
             {userName}
@@ -71,7 +74,10 @@ const Navbar = () => {
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" onClick={handleLogout} >
+              <button
+                className="btn btn-outline-success"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </form>

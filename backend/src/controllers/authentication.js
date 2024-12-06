@@ -29,7 +29,6 @@ const register = async (req, res) => {
   }
 };
 
-
 const login = async (req, res) => {
   const { email, passwordHash } = req.body;
 
@@ -50,16 +49,15 @@ const login = async (req, res) => {
         email: findUser.email,
       };
 
-      jwt.sign(payload, jwtkey, { expiresIn: '1h' }, (err, token) => {
+      jwt.sign(payload, jwtkey, { expiresIn: "1h" }, (err, token) => {
         if (err) {
           console.error("Error while generating Jsonwebtoken", err);
           return res.status(500).json({ message: "Internal server error" });
         }
-        
+
         res.status(200).json({ token: token });
       });
     });
-
   } catch (err) {
     console.error("Error in login function", err);
     res.status(500).json({ message: "Server error during login" });

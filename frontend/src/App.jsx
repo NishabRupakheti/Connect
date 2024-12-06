@@ -13,7 +13,7 @@ import RootLayout from "./Layout/RootLayout";
 import Authlayout from "./Layout/Authlayout";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { useAuth } from "./context/Context";
-import './App.css'
+import "./App.css";
 
 function App() {
   const { isAuthenticated } = useAuth();

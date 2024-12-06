@@ -47,7 +47,7 @@ const Friends = () => {
   }, []);
 
   return (
-    <div className="container w-50 mt-4" style={{ fontSize: "20px" , fontFamily: "Barlow" }} >
+    <div className="container w-50 mt-4" style={{ fontSize: "20Fpx" , fontFamily: "Barlow" }} >
       {friends.length === 0 ? (
         <>
           <div className="alert alert-info text-center">No friends yet🍃🍃</div>

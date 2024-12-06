@@ -155,7 +155,7 @@ const Home = () => {
       {activePost && (
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
-            <Modal.Title>{activePost.userId.userName}</Modal.Title>
+            <Modal.Title style={{ fontFamily: "PT Sans" }} >{activePost.userId.userName}'s Post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className={`card mt-4`} style={{ fontFamily: "PT Sans" }}>
@@ -174,12 +174,12 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="card mt-3">
+            <div className="card mt-4">
               <ul className="list-group list-group-flush">
                 {activePost.comments.length > 0 ? (
                   activePost.comments.map((comment, commentIndex) => (
                     <li key={commentIndex} style={{listStyle:"none", padding:"12px", fontSize:"16px", fontFamily:"PT Sans"}} >
-                      <h6 className="card-title mt-2">
+                      <h6 className="card-title mt-1">
                         {comment.userId.userName}
                       </h6>
                       <span style={{ fontSize: "0.5em" }}>

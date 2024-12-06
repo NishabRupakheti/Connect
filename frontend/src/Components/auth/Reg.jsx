@@ -2,20 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-
+import { useAuth } from "../../context/Context";
 
 
 const RegisterForm = () => {
-  
+  const { eyestate , setEyeState , toggleEye} = useAuth();
   const [userName, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
-  const [eyestate, setEyeState] = useState(false);
-
-  const toggleEye = () => {
-    setEyeState(!eyestate);
-  };
 
   function removeStatus(){
     setTimeout(() => {

@@ -47,14 +47,14 @@ const People = () => {
   }, []);
 
   return (
-    <div className="container d-flex justify-content-center align-items-center flex-column mt-4">
+    <div className="container d-flex justify-content-center align-items-center flex-column mt-4" style={{ fontFamily: "Barlow" , fontSize: "20px" }} >
       {people.map((person, index) => {
         return (
           <div key={index} className="card w-50 mt-4 ">
-            <div className="card-header">{person.email}</div>
+            <div className="card-header">{person.userName}</div>
             <div className="card-body">
               <h5 className="card-title"></h5>
-              <p className="card-text">{person.userName}</p>
+              <p className="card-text">{person.email}</p>
               <a
                 href="#"
                 className="btn btn-primary"

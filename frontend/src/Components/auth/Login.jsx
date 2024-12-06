@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/Context";
 import { Link } from "react-router-dom";
+import { FaRegEye } from "react-icons/fa6";
+import { FaRegEyeSlash } from "react-icons/fa6";
 
 const Login = () => {
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated , eyestate , setEyeState , toggleEye } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
+  
 
   function removeStatus() {
     setTimeout(() => {
@@ -73,17 +76,22 @@ const Login = () => {
 
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
-              Password
+              Password (8 characters)
             </label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className=" d-flex justify-content-center">
+              <input
+                type={eyestate ? "text" : "password"}
+                id="password"
+                className="form-control"
+                placeholder="SeCrEtPaSsWoRd"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              ></input>
+              <span className="eye" onClick={toggleEye}>
+                {eyestate ? <FaRegEyeSlash /> : <FaRegEye />}
+              </span>
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary w-100">
