@@ -1,10 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { MdOutlineStarBorder } from "react-icons/md";
 
 const AuthNav = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{fontFamily: "Barlow"}} >
+    <nav
+      className="navbar navbar-expand-lg navbar-light bg-light"
+      style={{ fontFamily: "Barlow" }}
+    >
       <div className="container">
+        <MdOutlineStarBorder className="star" />
         <NavLink className="navbar-brand">Welcome</NavLink>
 
         <button

@@ -1,0 +1,30 @@
+.star{
+    font-size: 2rem;
+    margin-right: 10px;
+    animation: App-logo-spin infinite 5s linear
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.statusBar{
+    transition-duration: 1s;
+    transition-property: all;
+    font-family: "Barlow", serif;
+    font-size: larger;
+}
+
+.eye{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: 4px;
+    cursor: pointer;
+    border-color: rgb(227, 213, 196);
+}

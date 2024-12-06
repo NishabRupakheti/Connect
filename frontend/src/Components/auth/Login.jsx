@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <>
       {status && (
-        <div className="container text-center alert mt-4 alert-danger">
+        <div className="container text-center alert mt-4 alert-danger text-capitalize ">
           {status}
         </div>
       )}
@@ -53,7 +53,7 @@ const Login = () => {
           className="p-5 border rounded shadow"
           style={{ width: "100%", maxWidth: "500px" }}
         >
-          <h2 className="text-center mb-4" style={{ fontFamily: "cursive" }}>
+          <h2 className="text-center mb-4" style={{ fontFamily: "Barlow" }}>
             Login
           </h2>
           <div className="mb-3">
@@ -90,7 +90,7 @@ const Login = () => {
             Log In
           </button>
           <div className="container mt-3">
-            Don't have an account?  <Link to="register">Sign Up</Link>
+            Don't have an account? <Link to="register">Sign Up</Link>
           </div>
         </form>
       </div>

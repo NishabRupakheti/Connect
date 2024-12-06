@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { FaRegEye } from "react-icons/fa6";
+import { FaRegEyeSlash } from "react-icons/fa6";
+
+
 
 const RegisterForm = () => {
   
@@ -7,6 +11,11 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
+  const [eyestate, setEyeState] = useState(false);
+
+  const toggleEye = () => {
+    setEyeState(!eyestate);
+  };
 
   function removeStatus(){
     setTimeout(() => {
@@ -47,7 +56,7 @@ const RegisterForm = () => {
   return (
     <>
       {status && (
-        <div className="container text-center alert mt-4 alert-danger">{status}</div>
+        <div className="container text-center alert mt-4 alert-danger  statusBar">{status}</div>
       )}
       <div
         className="d-flex justify-content-center align-items-center"
@@ -58,7 +67,7 @@ const RegisterForm = () => {
           className="p-5 border rounded shadow"
           style={{ width: "100%", maxWidth: "500px" }}
         >
-          <h2 className="text-center mb-4" style={{ fontFamily: "cursive" }}>
+          <h2 className="text-center mb-4" style={{ fontFamily: "Barlow" }}>
             Register
           </h2>
 
@@ -85,7 +94,7 @@ const RegisterForm = () => {
               type="email"
               id="email"
               className="form-control"
-              placeholder="Enter email"
+              placeholder="xyz@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -94,18 +103,30 @@ const RegisterForm = () => {
 
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
-              Password
+              Password (8 characters)
             </label>
+            <div className=" d-flex justify-content-center">
             <input
-              type="password"
+              type={eyestate ? "text" : "password"} 
               id="password"
               className="form-control"
-              placeholder="Enter password"
+              placeholder="SeCrEtPaSsWoRd"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-            />
+            >
+            </input>
+            <span className="eye" onClick={toggleEye} >
+            {
+              eyestate ? (
+                <FaRegEyeSlash />
+              ) : (
+                <FaRegEye />
+              )
+            }
+            </span>
           </div>
+            </div>
 
           <button type="submit" className="btn btn-primary w-100">
             Register
