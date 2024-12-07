@@ -7,7 +7,7 @@ import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
 
 const Home = () => {
-  const { posts = [], setPosts, setUserName, token } = useAuth();
+  const { posts = [], setPosts, setUserName, token , setIsAuthenticated } = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
@@ -24,6 +24,10 @@ const Home = () => {
       setUserName(response.data.userInfo);
     } catch (err) {
       console.log("Failed to fetch the data", err);
+      if(err.response.data.message == "Expired token" || err.response.data.message == "Invalid token" ){
+        setIsAuthenticated(false)
+      }
+
     }
   };
 

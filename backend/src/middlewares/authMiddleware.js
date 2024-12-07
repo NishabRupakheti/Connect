@@ -17,11 +17,15 @@ const accessMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    if(err)
-      if(err.name === "TokenExpiredError"){
+    if (err)
+      if (err.name === "TokenExpiredError") {
         res.status(401).json({
-          message : "Invalid token"
-        })
+          message: "Invalid token",
+        });
+      } else if (err.name === "JsonWebTokenError") {
+        res.status(401).json({
+          message: "Expired token",
+        });
       }
     console.log("Error while token verification", err);
   }

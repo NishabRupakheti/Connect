@@ -3,14 +3,20 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/Context";
 import { GoMoon } from "react-icons/go";
 import { BsSun } from "react-icons/bs";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const Navbar = () => {
   const { userName, setIsAuthenticated } = useAuth();
   const [theme, setTheme] = useState("light");
+  const [show, setShow] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -93,18 +99,23 @@ const Navbar = () => {
               )}
             </span>
             <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-outline-success"
-                onClick={handleLogout}
-              >
+              <Button variant="danger" onClick={handleShow}>
                 Logout
-              </button>
+              </Button>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title> Confirmation </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to logout ??</Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Nope
+                  </Button>
+                  <Button variant="Light" onClick={handleLogout}>
+                    Proceed☑️
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </form>
           </div>
         </div>
