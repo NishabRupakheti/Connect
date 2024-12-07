@@ -20,6 +20,7 @@ const getRequestHandler = async (req, res) => {
     res.status(200).json({
       findPost: findPost,
       userInfo: userName,
+      userId: userId
     });
   } catch (err) {
     console.error("Error in get request handler", err);

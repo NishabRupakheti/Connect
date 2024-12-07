@@ -7,11 +7,18 @@ import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
 
 const Home = () => {
-  const { posts = [], setPosts, setUserName, token , setIsAuthenticated } = useAuth();
+  const {
+    posts = [],
+    setPosts,
+    setUserName,
+    token,
+    setIsAuthenticated,
+  } = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
   const [likeState, setlikeState] = useState(false);
+  const [userId , setUserId] = useState("")
 
   const getFunction = async () => {
     try {
@@ -20,14 +27,18 @@ const Home = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response);
       setPosts(response.data.findPost);
       setUserName(response.data.userInfo);
+      setUserId(response.data.userId)
+      
     } catch (err) {
-      console.log("Failed to fetch the data", err);
-      if(err.response.data.message == "Expired token" || err.response.data.message == "Invalid token" ){
-        setIsAuthenticated(false)
+      if (
+        err.response.data.message == "Expired token" ||
+        err.response.data.message == "Invalid token"
+      ) {
+        setIsAuthenticated(false);
       }
-
     }
   };
 
@@ -94,7 +105,7 @@ const Home = () => {
   return (
     <>
       {posts.length > 0 ? (
-        <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column" >
+        <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
           {posts.map((post, index) => (
             <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
               <div className="card-body">
@@ -123,7 +134,9 @@ const Home = () => {
                     href="#"
                     className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
                   >
-                    {likeState ? "Unlike" : "Like"}
+                    {
+                      post.likes.includes(userId) ? "Unlike" : "Like"
+                    }
                   </button>
 
                   <button
@@ -159,7 +172,9 @@ const Home = () => {
       {activePost && (
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
-            <Modal.Title style={{ fontFamily: "PT Sans" }} >{activePost.userId.userName}'s Post</Modal.Title>
+            <Modal.Title style={{ fontFamily: "PT Sans" }}>
+              {activePost.userId.userName}'s Post
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className={`card mt-4`} style={{ fontFamily: "PT Sans" }}>
@@ -182,7 +197,15 @@ const Home = () => {
               <ul className="list-group list-group-flush">
                 {activePost.comments.length > 0 ? (
                   activePost.comments.map((comment, commentIndex) => (
-                    <li key={commentIndex} style={{listStyle:"none", padding:"12px", fontSize:"16px", fontFamily:"PT Sans"}} >
+                    <li
+                      key={commentIndex}
+                      style={{
+                        listStyle: "none",
+                        padding: "12px",
+                        fontSize: "16px",
+                        fontFamily: "PT Sans",
+                      }}
+                    >
                       <h6 className="card-title mt-1">
                         {comment.userId.userName}
                       </h6>
