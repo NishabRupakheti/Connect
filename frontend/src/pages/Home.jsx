@@ -20,8 +20,12 @@ const Home = () => {
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
-  const [likeState, setlikeState] = useState(false);
   const [userId , setUserId] = useState("")
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   const getFunction = async () => {
     try {
@@ -115,9 +119,24 @@ const Home = () => {
                 <div className="d-flex justify-content-between ">
                 <h5 className="card-title"> {post.userId.userName} </h5>
                 {
-                  post.userId.userName == userName ? <MdDeleteOutline style={{cursor:"pointer"}} /> : "" 
+                  post.userId.userName == userName ? <MdDeleteOutline style={{cursor:"pointer"}} onClick={handleShow} /> : "" 
                 }
                 </div>
+
+                <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title> Confirmation </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete this post ??</Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Nope
+                  </Button>
+                  <Button variant="danger" onClick={handleClose}>
+                    DELETE 
+                  </Button>
+                </Modal.Footer>
+              </Modal>
                 
                 <span style={{ fontSize: "0.5em" }}>
                   {new Intl.DateTimeFormat("en-US", {
