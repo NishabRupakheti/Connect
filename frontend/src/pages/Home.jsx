@@ -5,6 +5,8 @@ import { LiaCommentSolid } from "react-icons/lia";
 import styles from "../styles/Postcard.module.css";
 import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
+import { MdDeleteOutline } from "react-icons/md";
+
 
 const Home = () => {
   const {
@@ -13,6 +15,7 @@ const Home = () => {
     setUserName,
     token,
     setIsAuthenticated,
+    userName
   } = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -109,7 +112,13 @@ const Home = () => {
           {posts.map((post, index) => (
             <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
               <div className="card-body">
+                <div className="d-flex justify-content-between ">
                 <h5 className="card-title"> {post.userId.userName} </h5>
+                {
+                  post.userId.userName == userName ? <MdDeleteOutline style={{cursor:"pointer"}} /> : "" 
+                }
+                </div>
+                
                 <span style={{ fontSize: "0.5em" }}>
                   {new Intl.DateTimeFormat("en-US", {
                     weekday: "short",
