@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 
 const Context = createContext();
@@ -7,9 +7,16 @@ export const ContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
-  const token = localStorage.getItem("secretToken");
   const [status, setStatus] = useState("");
   const [eyestate, setEyeState] = useState(false);
+  
+  const token = localStorage.getItem("secretToken");
+
+  useEffect(()=>{
+    if(token){
+      setIsAuthenticated(true);
+    }
+  },[token])
 
   const toggleEye = () => {
     setEyeState(!eyestate);

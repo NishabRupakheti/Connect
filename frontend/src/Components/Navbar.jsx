@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/Context";
+import { GoMoon } from "react-icons/go";
+import { BsSun } from "react-icons/bs";
 
 const Navbar = () => {
   const { userName, setIsAuthenticated } = useAuth();
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -14,6 +21,7 @@ const Navbar = () => {
     <>
       <nav
         className="navbar navbar-expand-lg bg-body-tertiary"
+        data-bs-theme={theme}
         style={{ fontFamily: "Barlow", fontSize: "20px" }}
       >
         <div className="container-fluid">
@@ -67,6 +75,23 @@ const Navbar = () => {
                 </ul>
               </li>
             </ul>
+            <span
+              style={{
+                padding: "5px",
+                marginRight: "18px",
+                fontSize: "25px",
+                cursor: "pointer",
+                backgroundColor: "white",
+                borderRadius: "5px",
+                textAlign: "center",
+              }}
+            >
+              {theme === "light" ? (
+                <GoMoon onClick={toggleTheme} />
+              ) : (
+                <BsSun onClick={toggleTheme} />
+              )}
+            </span>
             <form className="d-flex" role="search">
               <input
                 className="form-control me-2"

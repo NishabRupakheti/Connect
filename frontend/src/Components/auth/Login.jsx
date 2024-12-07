@@ -3,7 +3,8 @@ import axios from "axios";
 import { useAuth } from "../../context/Context";
 import { Link } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa6";
-import { FaRegEyeSlash } from "react-icons/fa6";
+import { LuEyeClosed } from "react-icons/lu";
+
 
 const Login = () => {
   const { setIsAuthenticated , eyestate , setEyeState , toggleEye } = useAuth();
@@ -48,7 +49,7 @@ const Login = () => {
         </div>
       )}
       <div
-        className="d-flex justify-content-center align-items-center"
+        className="d-flex justify-content-center align-items-center" 
         style={{ fontFamily: "Barlow", fontWeight: "400", marginTop: "3.5rem" }}
       >
         <form
@@ -89,7 +90,7 @@ const Login = () => {
                 required
               ></input>
               <span className="eye" onClick={toggleEye}>
-                {eyestate ? <FaRegEyeSlash /> : <FaRegEye />}
+                {eyestate ?  <FaRegEye /> : <LuEyeClosed />}
               </span>
             </div>
           </div>

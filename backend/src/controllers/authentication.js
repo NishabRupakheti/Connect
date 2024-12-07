@@ -49,7 +49,7 @@ const login = async (req, res) => {
         email: findUser.email,
       };
 
-      jwt.sign(payload, jwtkey, { expiresIn: "1h" }, (err, token) => {
+      jwt.sign(payload, jwtkey, { expiresIn: "10m" }, (err, token) => {
         if (err) {
           console.error("Error while generating Jsonwebtoken", err);
           return res.status(500).json({ message: "Internal server error" });

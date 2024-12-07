@@ -90,7 +90,7 @@ const Home = () => {
   return (
     <>
       {posts.length > 0 ? (
-        <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
+        <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column" >
           {posts.map((post, index) => (
             <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
               <div className="card-body">
