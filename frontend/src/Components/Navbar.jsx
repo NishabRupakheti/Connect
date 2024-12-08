@@ -83,6 +83,7 @@ const Navbar = () => {
             </ul>
             <span
               style={{
+                lineHeight: "10px",
                 padding: "5px",
                 marginRight: "18px",
                 fontSize: "25px",

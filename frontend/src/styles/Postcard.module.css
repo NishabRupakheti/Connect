@@ -19,3 +19,9 @@
 .rbtn{
     width: 45%;
 }
+
+@media screen and (max-width: 690px) {
+    .postCard{
+        width: 100%
+    }
+}

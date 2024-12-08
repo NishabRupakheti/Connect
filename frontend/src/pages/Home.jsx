@@ -21,8 +21,6 @@ const Home = () => {
   const [comment, setComment] = useState("");
   const [userId, setUserId] = useState("");
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const getFunction = async () => {
     try {
