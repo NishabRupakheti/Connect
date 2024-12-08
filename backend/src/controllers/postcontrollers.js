@@ -15,12 +15,12 @@ const getRequestHandler = async (req, res) => {
     const findPost = await Post.find({ userId: { $in: followingUserIds } })
       .sort({ createdAt: -1 })
       .populate("userId", "userName email")
-      .populate("comments.userId", "userName")
+      .populate("comments.userId", "userName");
 
     res.status(200).json({
       findPost: findPost,
       userInfo: userName,
-      userId: userId
+      userId: userId,
     });
   } catch (err) {
     console.error("Error in get request handler", err);
@@ -57,10 +57,9 @@ const postRequestHandler = async (req, res) => {
 };
 
 const deleteRequestHandler = async (req, res) => {
-  const _id = req.body.ObjId;
+  const { postObjId } = req.params;
   try {
-    const deletepost = await Post.findByIdAndDelete(_id);
-
+    const deletepost = await Post.findByIdAndDelete(postObjId);
     res.status(201).json({
       message: "The post is deleted",
       deletepost,

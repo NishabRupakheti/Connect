@@ -9,7 +9,7 @@ router.get('/all',getall)
 
 router.get("/",accessMiddleware,getRequestHandler)
 router.post('/posts',accessMiddleware,postRequestHandler)
-router.delete('/posts', accessMiddleware, deleteRequestHandler )
+router.delete('/posts/:postObjId', accessMiddleware, deleteRequestHandler )
 
 
 module.exports = router;

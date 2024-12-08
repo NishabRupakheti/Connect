@@ -5,8 +5,7 @@ import { LiaCommentSolid } from "react-icons/lia";
 import styles from "../styles/Postcard.module.css";
 import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
-import { MdDeleteOutline } from "react-icons/md";
-
+import DeleteComponent from "../Components/DeleteComponent";
 
 const Home = () => {
   const {
@@ -15,17 +14,15 @@ const Home = () => {
     setUserName,
     token,
     setIsAuthenticated,
-    userName
+    userName,
   } = useAuth();
   const [activePost, setActivePost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
-  const [userId , setUserId] = useState("")
+  const [userId, setUserId] = useState("");
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const getFunction = async () => {
     try {
@@ -34,11 +31,9 @@ const Home = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       setPosts(response.data.findPost);
       setUserName(response.data.userInfo);
-      setUserId(response.data.userId)
-      
+      setUserId(response.data.userId);
     } catch (err) {
       if (
         err.response.data.message == "Expired token" ||
@@ -117,27 +112,16 @@ const Home = () => {
             <div className={`card mt-5 ${styles["postCard"]}`} key={index}>
               <div className="card-body">
                 <div className="d-flex justify-content-between ">
-                <h5 className="card-title"> {post.userId.userName} </h5>
-                {
-                  post.userId.userName == userName ? <MdDeleteOutline style={{cursor:"pointer"}} onClick={handleShow} /> : "" 
-                }
+                  <h5 className="card-title"> {post.userId.userName} </h5>
+                  {post.userId.userName == userName ? (
+                    <DeleteComponent
+                      postObjId={post._id}
+                      getfunction={getFunction}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
-
-                <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title> Confirmation </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Are you sure you want to delete this post ??</Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Nope
-                  </Button>
-                  <Button variant="danger" onClick={handleClose}>
-                    DELETE 
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-                
                 <span style={{ fontSize: "0.5em" }}>
                   {new Intl.DateTimeFormat("en-US", {
                     weekday: "short",
@@ -162,9 +146,7 @@ const Home = () => {
                     href="#"
                     className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
                   >
-                    {
-                      post.likes.includes(userId) ? "Unlike" : "Like"
-                    }
+                    {post.likes.includes(userId) ? "Unlike" : "Like"}
                   </button>
 
                   <button
