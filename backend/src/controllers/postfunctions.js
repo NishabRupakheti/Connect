@@ -3,12 +3,12 @@ const Post = require("../db/models/PostModel");
 const increaseLike = async (req, res) => {
   const { postObjID } = req.body;
   const { userId } = req.user;
-  
+
   try {
     const findPost = await Post.findOne({ _id: postObjID });
 
     if (!findPost) {
-      return res.status(404).json({ message: 'Post not found' });
+      return res.status(404).json({ message: "Post not found" });
     }
 
     const hasLiked = findPost.likes.includes(userId);
@@ -26,7 +26,7 @@ const increaseLike = async (req, res) => {
         },
         { new: true }
       );
-      return res.status(200).json({ message: 'Post unliked' });
+      return res.status(200).json({ message: "Post unliked" });
     } else {
       await Post.findByIdAndUpdate(
         postObjID,
@@ -36,14 +36,13 @@ const increaseLike = async (req, res) => {
         },
         { new: true }
       );
-      return res.status(200).json({ message: 'Post liked' });
+      return res.status(200).json({ message: "Post liked" });
     }
   } catch (err) {
-    console.error('Error in increaseLike', err);
-    return res.status(500).json({ message: 'Server error' });
+    console.error("Error in increaseLike", err);
+    return res.status(500).json({ message: "Server error" });
   }
 };
-
 
 const increaseComment = async (req, res) => {
   const { postObjID, message } = req.body;
@@ -67,4 +66,26 @@ const increaseComment = async (req, res) => {
   }
 };
 
-module.exports = { increaseComment, increaseLike };
+const deleteComment = async (req, res) => {
+  const { postObjId, commentId } = req.params;
+
+  try {
+    const response = await Post.findById(postObjId);
+
+    const commentIndex = response.comments.findIndex(
+      (comment) => comment._id.toString() === commentId
+    );
+
+    response.comments.splice(commentIndex, 1);
+
+    await response.save();
+
+    res.status(201).json({
+      message: "The comment is deleted",
+    });
+  } catch (err) {
+    console.error("Error on deleteComment controller", err);
+  }
+};
+
+module.exports = { increaseComment, increaseLike, deleteComment };
