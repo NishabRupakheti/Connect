@@ -6,7 +6,7 @@ import styles from "../styles/Postcard.module.css";
 import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
 import DeleteComponent from "../Components/DeleteComponent";
-import { AiOutlineDelete } from "react-icons/ai";
+import CommentDeleter from "../Components/CommentDeleter";
 
 const Home = () => {
   const {
@@ -21,7 +21,6 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
   const [userId, setUserId] = useState("");
-  const [show, setShow] = useState(false);
 
   const getFunction = async () => {
     try {
@@ -223,12 +222,7 @@ const Home = () => {
                           {comment.userId.userName}
                         </h6>
                         {comment.userId.userName === userName ? (
-                          <span>
-                            {" "}
-                            <AiOutlineDelete
-                              style={{ fontSize: "23px", cursor: "pointer" }}
-                            />{" "}
-                          </span>
+                          <CommentDeleter commentId={comment._id} postObjId={activePost._id} getFunction={getFunction} setShowModal={setShowModal} />
                         ) : (
                           "  "
                         )}
