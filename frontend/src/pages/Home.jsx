@@ -6,6 +6,7 @@ import styles from "../styles/Postcard.module.css";
 import { useAuth } from "../context/Context";
 import { Modal, Button } from "react-bootstrap";
 import DeleteComponent from "../Components/DeleteComponent";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const Home = () => {
   const {
@@ -214,9 +215,25 @@ const Home = () => {
                         fontFamily: "PT Sans",
                       }}
                     >
-                      <h6 className="card-title mt-1">
-                        {comment.userId.userName}
-                      </h6>
+                      <div className="d-flex">
+                        <h6
+                          style={{ width: "90%" }}
+                          className="card-title mt-1"
+                        >
+                          {comment.userId.userName}
+                        </h6>
+                        {comment.userId.userName === userName ? (
+                          <span>
+                            {" "}
+                            <AiOutlineDelete
+                              style={{ fontSize: "23px", cursor: "pointer" }}
+                            />{" "}
+                          </span>
+                        ) : (
+                          "  "
+                        )}
+                      </div>
+
                       <span style={{ fontSize: "0.5em" }}>
                         {new Intl.DateTimeFormat("en-US", {
                           weekday: "short",
