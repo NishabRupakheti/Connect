@@ -9,11 +9,13 @@ const connect = async (req, res) => {
   try {
     const newConnection = new connectionModel({
         follower,
-        following
+        following,
+        status:"pending"
     })
+
     await newConnection.save();
     res.status(201).json({
-        message : "New friend added"
+        message : "Follow request send"
     })
   } catch (err) {
     console.error("Error with connection", err);

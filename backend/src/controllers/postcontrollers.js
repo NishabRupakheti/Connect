@@ -6,7 +6,7 @@ const getRequestHandler = async (req, res) => {
 
   try {
     const findConnection = await connectionModel
-      .find({ follower: userId })
+      .find({ follower: userId , status: "accepted" })
       .select("following");
 
     const followingUserIds = findConnection.map((conn) => conn.following);

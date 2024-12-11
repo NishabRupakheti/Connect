@@ -5,7 +5,7 @@ const givefriends = async (req, res) => {
   const { userId } = req.user;
   try {
     const followedUsers = await connection
-      .find({ follower: userId })
+      .find({ follower: userId, status: "accepted" })
       .select("following");
     const followedIds = followedUsers.map((conn) => conn.following);
 

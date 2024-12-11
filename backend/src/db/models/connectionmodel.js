@@ -12,6 +12,11 @@ const connectionSchema = new mongoose.Schema(
       ref: "User",
       requierd: true,
     },
+    status: {
+      type: String,
+      enum: ["pending", "accepted","rejected"],
+      default: "pending",
+    },
     createdAt: {
       type: Date,
       default: Date.now,

@@ -4,7 +4,7 @@ const showConnection = async (req, res) => {
   const { userId } = req.user;
 
   const connections = await connection
-    .find({ follower: userId })
+    .find({ follower: userId, status: "accepted" })
     .populate("following", "userName email");
 
   const followingUsers = connections.map((connection) => connection.following);
