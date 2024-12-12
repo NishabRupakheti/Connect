@@ -6,7 +6,6 @@ import { CiBookmarkPlus } from "react-icons/ci";
 
 const Friends = () => {
   const { token } = useAuth();
-
   const [friends, setFriends] = useState([]);
 
   const removeFriend = async (index, followingId) => {
