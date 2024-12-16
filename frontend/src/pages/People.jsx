@@ -96,7 +96,7 @@ const People = () => {
                 {person.status === "pending"
                   ? "Cancel"
                   : person.status === "accepted"
-                  ? "Friends ✅"
+                  ? "Following ✅"
                   : "Follow"}
               </a>
             </div>

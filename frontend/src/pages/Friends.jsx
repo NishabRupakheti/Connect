@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "../context/Context";
 import { CiBookmarkPlus } from "react-icons/ci";
 
-
 const Friends = () => {
   const { token } = useAuth();
   const [friends, setFriends] = useState([]);
@@ -12,7 +11,7 @@ const Friends = () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/friend/disconnect",
-        { following : followingId },
+        { following: followingId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,15 +45,20 @@ const Friends = () => {
   }, []);
 
   return (
-    <div className="container w-50 mt-4" style={{ fontSize: "20Fpx" , fontFamily: "Barlow" }} >
+    <div
+      className="container d-flex justify-content-center align-items-center flex-column mt-5" 
+      style={{ fontFamily: "Barlow", fontSize: "20px"}}
+    >
       {friends.length === 0 ? (
         <>
           <div className="alert alert-info text-center">No friends yet🍃🍃</div>
-          <p className="text-center text-uppercase" >Try following some people <CiBookmarkPlus /> </p>
+          <p className="text-center text-uppercase">
+            Try following some people <CiBookmarkPlus />{" "}
+          </p>
         </>
       ) : (
         friends.map((friend, index) => (
-          <div key={index} className="card mb-3">
+          <div key={index} className="card mb-3 w-50 ">
             <div className="card-header">
               <h5 className="card-title">{friend.userName}</h5>
             </div>
