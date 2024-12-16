@@ -4,6 +4,8 @@ import Friends from "./pages/Friends";
 import Home from "./pages/Home";
 import People from "./pages/People";
 import Post from "./pages/Post";
+import FollowReq from "./Components/FollowReq";
+
 import {
   createBrowserRouter,
   Navigate,
@@ -52,6 +54,14 @@ function App() {
           element: (
             <ProtectedRoute>
               <Friends />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "followers",
+          element: (
+            <ProtectedRoute>
+              <FollowReq />
             </ProtectedRoute>
           ),
         },

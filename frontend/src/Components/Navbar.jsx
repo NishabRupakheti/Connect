@@ -70,12 +70,17 @@ const Navbar = () => {
                 <ul className="dropdown-menu">
                   <li>
                     <Link className="dropdown-item" to="/friends">
-                      Friends
+                      Following
                     </Link>
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/people">
                       People
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/followers">
+                      Follow request
                     </Link>
                   </li>
                 </ul>
