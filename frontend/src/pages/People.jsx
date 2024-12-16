@@ -5,7 +5,6 @@ import { useAuth } from "../context/Context";
 const People = () => {
   const { token } = useAuth();
   const [people, setPeople] = useState([]);
-  const [btnState, setBtnstate] = useState(null);
 
   const getPeople = async () => {
     try {
@@ -14,7 +13,7 @@ const People = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(response.data);
       setPeople(response.data);
     } catch (err) {
       console.log("Error fetching data ", err);
@@ -42,7 +41,7 @@ const People = () => {
     }
   };
 
-  const removeFriend = async (index, followingId) => {
+  const removeFriend = async (followingId) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/friend/disconnect",
@@ -55,6 +54,7 @@ const People = () => {
       );
 
       console.log(response);
+      getPeople();
     } catch (error) {
       console.error("Error disconnecting friend:", error);
     }
@@ -76,23 +76,29 @@ const People = () => {
             <div className="card-body">
               <h5 className="card-title"></h5>
               <p className="card-text">{person.email}</p>
-              {btnState ? (
-                <a
-                  href="#"
-                  className="btn btn-primary"
-                  onClick={() => handleFolow(person._id)}
-                >
-                  Follow
-                </a>
-              ) : (
-                <a
-                  href="#"
-                  className="btn btn-primary"
-                  onClick={() => handleFolow(person._id)}
-                >
-                  Follow
-                </a>
-              )}
+              <a
+                href="#"
+                className={
+                  person.status === "pending"
+                    ? "btn btn-danger"
+                    : person.status === "accepted"
+                    ? "btn btn-success"
+                    : "btn btn-primary"
+                }
+                onClick={() =>
+                  person.status === "pending"
+                    ? removeFriend(person._id)
+                    : person.status === "none"
+                    ? handleFolow(person._id)
+                    : null
+                }
+              >
+                {person.status === "pending"
+                  ? "Cancel"
+                  : person.status === "accepted"
+                  ? "Friends ✅"
+                  : "Follow"}
+              </a>
             </div>
           </div>
         );

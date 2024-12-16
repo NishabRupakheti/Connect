@@ -144,7 +144,7 @@ const Home = () => {
                     href="#"
                     className={`btn m-1 btn-outline-dark ${styles["lbtn"]}`}
                   >
-                    {post.likes.includes(userId) ? "Unlike" : "Like"}
+                    {post.likes.includes(userId) ? "Unlike 👎" : "Like 👍"}
                   </button>
 
                   <button
