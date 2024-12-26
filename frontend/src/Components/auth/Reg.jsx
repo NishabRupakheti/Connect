@@ -23,7 +23,7 @@ const RegisterForm = () => {
     if (password.length >= 8) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:3000/auth/register",
+          "https://socialmedia-app-vxyd.onrender.com/auth/register",
           {
             userName: userName,
             email: email,
