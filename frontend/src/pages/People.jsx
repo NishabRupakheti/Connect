@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/Context";
+import styles from "../styles/Postcard.module.css";
 
 const People = () => {
   const { token } = useAuth();
@@ -71,7 +72,7 @@ const People = () => {
     >
       {people.map((person, index) => {
         return (
-          <div key={index} className="card w-50 mt-4 ">
+          <div key={index} className={ ` card mt-4 ${styles['postCard']}`}>
             <div className="card-header">{person.userName}</div>
             <div className="card-body">
               <h5 className="card-title"></h5>
