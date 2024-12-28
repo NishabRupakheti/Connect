@@ -40,9 +40,14 @@ const Post = () => {
         className="container d-flex justify-content-center mt-5"
         style={{ fontSize: "25px", fontFamily: "Barlow" }}
       >
-        <div className="card p-3 " style={{ width: "30rem" }}>
+        <div
+          className="card shadow-lg rounded-lg p-4"
+          style={{ width: "30rem" }}
+        >
           <div className="card-body">
-            <h5 className="card-title p-2"> What's on your mind </h5>
+            <h5 className="card-title mb-3" style={{ fontWeight: "bold" }}>
+              What's on your mind
+            </h5>
             <div className="input-group mb-3">
               <div className="form-floating">
                 <textarea
@@ -51,25 +56,27 @@ const Post = () => {
                   className="form-control"
                   placeholder="Leave a comment here"
                   id="floatingTextarea2"
-                  style={{ height: "100px" }}
+                  style={{ height: "100px", borderRadius: "8px" }}
                 ></textarea>
                 <label htmlFor="floatingTextarea2" style={{ fontSize: "15px" }}>
                   Share something
                 </label>
               </div>
             </div>
-            <a
-              href="#"
-              className="btn btn-outline-dark w-25"
-              onClick={handlePost}
-            >
-              Post
-            </a>
+            <div className="text-center">
+              <button
+                onClick={handlePost}
+                className="btn btn-primary w-50 py-2 rounded-pill"
+                style={{ fontWeight: "bold" }}
+              >
+                Post
+              </button>
+            </div>
           </div>
         </div>
       </div>
       {status && (
-        <div className="container text-center alert mt-4 w-50 alert-danger">
+        <div className="container text-center alert alert-danger mt-4 w-50 mx-auto">
           {status}
         </div>
       )}

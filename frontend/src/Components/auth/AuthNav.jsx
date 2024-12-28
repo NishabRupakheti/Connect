@@ -6,6 +6,7 @@ const AuthNav = () => {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light bg-light"
+      data-bs-theme="light"
       style={{ fontFamily: "Barlow", fontSize: "20px" }}
     >
       <div className="container">

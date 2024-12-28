@@ -9,11 +9,14 @@ const People = () => {
 
   const getPeople = async () => {
     try {
-      const response = await axios.get("https://socialmedia-app-vxyd.onrender.com/friend/people", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://socialmedia-app-vxyd.onrender.com/friend/people",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response.data);
       setPeople(response.data);
     } catch (err) {
@@ -21,7 +24,7 @@ const People = () => {
     }
   };
 
-  const handleFolow = async (followingId) => {
+  const handleFollow = async (followingId) => {
     try {
       const response = await axios.post(
         "https://socialmedia-app-vxyd.onrender.com/friend/connect",
@@ -72,34 +75,48 @@ const People = () => {
     >
       {people.map((person, index) => {
         return (
-          <div key={index} className={ ` card mt-4 ${styles['postCard']}`}>
-            <div className="card-header">{person.userName}</div>
+          <div
+            key={index}
+            className={`card mt-4 ${styles["postCard"]} shadow-lg rounded-lg`}
+          >
+            <div className="card-header text-center font-weight-bold bg-light">
+              {person.userName}
+            </div>
             <div className="card-body">
-              <h5 className="card-title"></h5>
-              <p className="card-text">{person.email}</p>
-              <a
-                href="#"
-                className={
-                  person.status === "pending"
-                    ? "btn btn-danger"
+              <p className="card-text text-muted">{person.email}</p>
+              <div>
+                <a
+                  href="#"
+                  className={`btn ${
+                    person.status === "pending"
+                      ? "btn-danger"
+                      : person.status === "accepted"
+                      ? "btn-success"
+                      : "btn-primary"
+                  } w-50 py-2 rounded-pill`}
+                  onClick={() =>
+                    person.status === "pending"
+                      ? removeFriend(person._id)
+                      : person.status === "none"
+                      ? handleFollow(person._id)
+                      : null
+                  }
+                  style={{
+                    transition: "all 0.3s ease",
+                    textTransform: "uppercase",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.target.style.backgroundColor = "#007bff")
+                  }
+                  onMouseLeave={(e) => (e.target.style.backgroundColor = "")}
+                >
+                  {person.status === "pending"
+                    ? "Cancel"
                     : person.status === "accepted"
-                    ? "btn btn-success"
-                    : "btn btn-primary"
-                }
-                onClick={() =>
-                  person.status === "pending"
-                    ? removeFriend(person._id)
-                    : person.status === "none"
-                    ? handleFolow(person._id)
-                    : null
-                }
-              >
-                {person.status === "pending"
-                  ? "Cancel"
-                  : person.status === "accepted"
-                  ? "Following ✅"
-                  : "Follow"}
-              </a>
+                    ? "Following ✅"
+                    : "Follow"}
+                </a>
+              </div>
             </div>
           </div>
         );
