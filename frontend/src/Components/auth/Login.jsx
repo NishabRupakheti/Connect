@@ -4,10 +4,11 @@ import { useAuth } from "../../context/Context";
 import { Link } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa6";
 import { LuEyeClosed } from "react-icons/lu";
+import "./Login.css";
 
 
 const Login = () => {
-  const { setIsAuthenticated , eyestate , setEyeState , toggleEye } = useAuth();
+  const { setIsAuthenticated , eyestate , toggleEye } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
@@ -42,68 +43,93 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="login-container">
+      <div className="login-background">
+        <div className="floating-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+        </div>
+      </div>
+      
       {status && (
-        <div className="container text-center alert mt-4 alert-danger text-capitalize ">
-          {status}
+        <div className="alert-container">
+          <div className="alert alert-danger">
+            <i className="fas fa-exclamation-circle"></i>
+            {status}
+          </div>
         </div>
       )}
-      <div
-        className="d-flex justify-content-center align-items-center" 
-        style={{ fontFamily: "Barlow", fontWeight: "400", marginTop: "3.5rem" }}
-      >
-        <form
-          onSubmit={handleSubmit}
-          className="p-5 border rounded shadow"
-          style={{ width: "100%", maxWidth: "500px" }}
-        >
-          <h2 className="text-center mb-4" style={{ fontFamily: "Barlow" }}>
-            Login
-          </h2>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password (8 characters)
-            </label>
-            <div className=" d-flex justify-content-center">
-              <input
-                type={eyestate ? "text" : "password"}
-                id="password"
-                className="form-control"
-                placeholder="SeCrEtPaSsWoRd"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              ></input>
-              <span className="eye" onClick={toggleEye}>
-                {eyestate ?  <FaRegEye /> : <LuEyeClosed />}
-              </span>
+      
+      <div className="login-wrapper">
+        <div className="login-card">
+          <div className="login-header">
+            <div className="logo-container">
+              <div className="logo-icon">
+                <i className="fas fa-users"></i>
+              </div>
             </div>
+            <h2 className="login-title">Welcome Back</h2>
+            <p className="login-subtitle">Sign in to your account</p>
           </div>
+          
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                <i className="fas fa-envelope"></i>
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="form-input"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-          <button type="submit" className="btn btn-primary w-100">
-            Log In
-          </button>
-          <div className="container mt-3">
-            Don't have an account? <Link to="register">Sign Up</Link>
-          </div>
-        </form>
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                <i className="fas fa-lock"></i>
+                Password
+              </label>
+              <div className="password-input-container">
+                <input
+                  type={eyestate ? "text" : "password"}
+                  id="password"
+                  className="form-input"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={toggleEye}
+                >
+                  {eyestate ? <FaRegEye /> : <LuEyeClosed />}
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" className="login-button">
+              <span>Sign In</span>
+              <i className="fas fa-arrow-right"></i>
+            </button>
+            
+            <div className="login-footer">
+              <p>
+                Don't have an account? 
+                <Link to="register" className="signup-link">Create one</Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -3,6 +3,8 @@ import axios from "axios";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { useAuth } from "../../context/Context";
+import { Link } from "react-router-dom";
+import "./Register.css";
 
 
 const RegisterForm = () => {
@@ -49,86 +51,118 @@ const RegisterForm = () => {
   };
 
   return (
-    <>
+    <div className="register-container">
+      <div className="register-background">
+        <div className="floating-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+          <div className="shape shape-4"></div>
+        </div>
+      </div>
+      
       {status && (
-        <div className="container text-center alert mt-4 alert-danger  statusBar">{status}</div>
+        <div className="alert-container">
+          <div className={`alert ${status.includes('successfully') ? 'alert-success' : 'alert-danger'}`}>
+            <i className={`fas ${status.includes('successfully') ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
+            {status}
+          </div>
+        </div>
       )}
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{marginTop: "3.5rem"}}
-      >
-        <form
-          onSubmit={handleSubmit}
-          className="p-5 border rounded shadow"
-          style={{ width: "100%", maxWidth: "500px" }}
-        >
-          <h2 className="text-center mb-4" style={{ fontFamily: "Barlow" }}>
-            Register
-          </h2>
-
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="form-control"
-              placeholder="Enter username"
-              value={userName}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+      
+      <div className="register-wrapper">
+        <div className="register-card">
+          <div className="register-header">
+            <div className="logo-container">
+              <div className="logo-icon">
+                <i className="fas fa-user-plus"></i>
+              </div>
+            </div>
+            <h2 className="register-title">Create Account</h2>
+            <p className="register-subtitle">Join our community today</p>
           </div>
-
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="xyz@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password (8 characters)
-            </label>
-            <div className=" d-flex justify-content-center">
-            <input
-              type={eyestate ? "text" : "password"} 
-              id="password"
-              className="form-control"
-              placeholder="SeCrEtPaSsWoRd"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            >
-            </input>
-            <span className="eye" onClick={toggleEye} >
-            {
-              eyestate ? (
-                <FaRegEyeSlash />
-              ) : (
-                <FaRegEye />
-              )
-            }
-            </span>
-          </div>
+          
+          <form onSubmit={handleSubmit} className="register-form">
+            <div className="form-group">
+              <label htmlFor="username" className="form-label">
+                <i className="fas fa-user"></i>
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                className="form-input"
+                placeholder="Enter your username"
+                value={userName}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
             </div>
 
-          <button type="submit" className="btn btn-primary w-100">
-            Register
-          </button>
-        </form>
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                <i className="fas fa-envelope"></i>
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="form-input"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                <i className="fas fa-lock"></i>
+                Password (minimum 8 characters)
+              </label>
+              <div className="password-input-container">
+                <input
+                  type={eyestate ? "text" : "password"}
+                  id="password"
+                  className="form-input"
+                  placeholder="Create a strong password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={toggleEye}
+                >
+                  {eyestate ? <FaRegEyeSlash /> : <FaRegEye />}
+                </button>
+              </div>
+              <div className="password-strength">
+                <div className="strength-indicator">
+                  <div className={`strength-bar ${password.length >= 8 ? 'strong' : password.length >= 4 ? 'medium' : 'weak'}`}></div>
+                </div>
+                <span className="strength-text">
+                  {password.length >= 8 ? 'Strong' : password.length >= 4 ? 'Medium' : 'Weak'}
+                </span>
+              </div>
+            </div>
+
+            <button type="submit" className="register-button">
+              <span>Create Account</span>
+              <i className="fas fa-arrow-right"></i>
+            </button>
+            
+            <div className="register-footer">
+              <p>
+                Already have an account? 
+                <Link to="/login" className="login-link">Sign in</Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
