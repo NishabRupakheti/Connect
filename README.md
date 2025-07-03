@@ -1,4 +1,4 @@
-# SocialMedia_App
+# Connect
 
 **Social Media App (Full-Stack)**  
 Technologies Used: **React**, **Node.js**, **MongoDB**, **JWT (JSON Web Tokens)**, **React Router**, **Express.js**, **CSS**, **HTML**
