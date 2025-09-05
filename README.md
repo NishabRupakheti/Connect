@@ -47,4 +47,6 @@ SocialMedia_App is a full-stack social media platform that enables users to conn
 5. **Follow System**:  
    Users can follow other users to see their posts on their feed and build a network within the app.
 
+   .........................................................................................................................................
+
 
