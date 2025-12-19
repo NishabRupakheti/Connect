@@ -10,7 +10,7 @@ const Post = () => {
     if (message.length != 0) {
       try {
         const response = await axios.post(
-          "https://socialmedia-app-vxyd.onrender.com/api/posts",
+          "https://connectbackend-7l4t.onrender.com/api/posts",
           {
             message: message,
           },

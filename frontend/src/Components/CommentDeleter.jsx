@@ -18,7 +18,7 @@ const CommentDeleter = ({ commentId, postObjId, getFunction , setShowModal }) =>
 
     try {
       const response = await axios.delete(
-        `https://socialmedia-app-vxyd.onrender.com/post/comment/${postObjId}/${commentId}`,
+        `https://connectbackend-7l4t.onrender.com/post/comment/${postObjId}/${commentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

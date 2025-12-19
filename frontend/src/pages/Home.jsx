@@ -25,7 +25,7 @@ const Home = () => {
   const getFunction = async () => {
     try {
       const response = await axios.get(
-        "https://socialmedia-app-vxyd.onrender.com/api/",
+        "https://connectbackend-7l4t.onrender.com/api/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const Home = () => {
     if (comment.length !== 0) {
       try {
         const response = await axios.put(
-          "https://socialmedia-app-vxyd.onrender.com/post/comment",
+          "https://connectbackend-7l4t.onrender.com/post/comment",
           {
             postObjID: postObjID,
             message: comment,
@@ -73,7 +73,7 @@ const Home = () => {
   const handleLike = async (postObjID) => {
     try {
       await axios.put(
-        "https://socialmedia-app-vxyd.onrender.com/post/like",
+        "https://connectbackend-7l4t.onrender.com/post/like",
         {
           postObjID,
         },

@@ -10,7 +10,7 @@ const Friends = () => {
   const removeFriend = async (index, followingId) => {
     try {
       const response = await axios.post(
-        "https://socialmedia-app-vxyd.onrender.com/friend/disconnect",
+        "https://connectbackend-7l4t.onrender.com/friend/disconnect",
         { following: followingId },
         {
           headers: {
@@ -29,7 +29,7 @@ const Friends = () => {
 
   const getFriends = async () => {
     const response = await axios.get(
-      "https://socialmedia-app-vxyd.onrender.com/friend/connection",
+      "https://connectbackend-7l4t.onrender.com/friend/connection",
       {
         headers: {
           Authorization: `Bearer ${token}`,

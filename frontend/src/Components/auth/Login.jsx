@@ -23,7 +23,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://socialmedia-app-vxyd.onrender.com/auth/login", {
+      const response = await axios.post("https://connectbackend-7l4t.onrender.com/auth/login", {
         email: email,
         passwordHash: password,
       });

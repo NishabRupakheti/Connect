@@ -9,7 +9,7 @@ const FollowReq = () => {
   const getFollowers = async () => {
     try {
       const response = await axios.get(
-        "https://socialmedia-app-vxyd.onrender.com/friend/followers",
+        "https://connectbackend-7l4t.onrender.com/friend/followers",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ const FollowReq = () => {
   const handleAccept = async (reqId) => {
     try {
       const response = await axios.post(
-        "https://socialmedia-app-vxyd.onrender.com/friend/resconnect",
+        "https://connectbackend-7l4t.onrender.com/friend/resconnect",
         {
           requestId: reqId,
           action: "accept",
@@ -48,7 +48,7 @@ const FollowReq = () => {
   const handleReject = async (reqId) => {
     try {
       const response = await axios.post(
-        "https://socialmedia-app-vxyd.onrender.com/friend/resconnect",
+        "https://connectbackend-7l4t.onrender.com/friend/resconnect",
         {
           requestId: reqId,
           action: "reject",

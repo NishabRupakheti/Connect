@@ -25,7 +25,7 @@ const RegisterForm = () => {
     if (password.length >= 8) {
       try {
         const response = await axios.post(
-          "https://socialmedia-app-vxyd.onrender.com/auth/register",
+          "https://connectbackend-7l4t.onrender.com/auth/register",
           {
             userName: userName,
             email: email,

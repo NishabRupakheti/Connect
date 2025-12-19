@@ -14,7 +14,7 @@ const DeleteComponent = ({ postObjId, getfunction }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://socialmedia-app-vxyd.onrender.com/api/posts/${postObjId}`,
+        `https://connectbackend-7l4t.onrender.com/api/posts/${postObjId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
