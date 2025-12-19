@@ -14,7 +14,7 @@ const DeleteComponent = ({ postObjId, getfunction }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://socialmedia-app-vxyd.onrender.com/api/posts/${postObjId}`,
+        `http://localhost:3000/api/posts/${postObjId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,22 +33,39 @@ const DeleteComponent = ({ postObjId, getfunction }) => {
   return (
     <>
       <MdDeleteOutline style={{ cursor: "pointer" }} onClick={handleShow} />
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title> Confirmation </Modal.Title>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton style={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "#fff",
+          border: "none"
+        }}>
+          <Modal.Title style={{ fontWeight: "600" }}>Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body> Are you sure you want to delete this post ?? </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+        <Modal.Body style={{ padding: "25px", fontSize: "1.1rem", color: "#34495e" }}>
+          Are you sure you want to delete this post? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer style={{ border: "none", padding: "20px" }}>
+          <Button 
+            variant="secondary" 
+            onClick={handleClose}
+            className="rounded-pill"
+            style={{ paddingLeft: "25px", paddingRight: "25px" }}
+          >
+            Cancel
           </Button>
           <Button
-            variant="danger"
             onClick={() => {
               handleDelete();
             }}
+            className="rounded-pill"
+            style={{
+              background: "#e74c3c",
+              border: "none",
+              paddingLeft: "25px",
+              paddingRight: "25px"
+            }}
           >
-            Confirm
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

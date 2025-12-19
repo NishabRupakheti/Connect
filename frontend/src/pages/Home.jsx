@@ -25,7 +25,7 @@ const Home = () => {
   const getFunction = async () => {
     try {
       const response = await axios.get(
-        "https://socialmedia-app-vxyd.onrender.com/api/",
+        "http://localhost:3000/api/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const Home = () => {
     if (comment.length !== 0) {
       try {
         const response = await axios.put(
-          "https://socialmedia-app-vxyd.onrender.com/post/comment",
+          "http://localhost:3000/post/comment",
           {
             postObjID: postObjID,
             message: comment,
@@ -73,7 +73,7 @@ const Home = () => {
   const handleLike = async (postObjID) => {
     try {
       await axios.put(
-        "https://socialmedia-app-vxyd.onrender.com/post/like",
+        "http://localhost:3000/post/like",
         {
           postObjID,
         },
@@ -108,16 +108,16 @@ const Home = () => {
   return (
     <>
       {posts.length > 0 ? (
-        <div className="container border border-1 mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
+        <div className="container mt-3 d-flex justify-content-center align-items-center p-3 flex-column">
           {posts.map((post, index) => (
             <div
-              className={`card mt-4 shadow-sm ${styles["postCard"]}`}
+              className={`card mt-4 ${styles["postCard"]}`}
               key={index}
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: "15px", border: "none" }}
             >
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="card-title mb-0">{post.userId.userName}</h5>
+                  <h5 className="card-title mb-0" style={{ fontWeight: "600", color: "#2c3e50" }}>{post.userId.userName}</h5>
                   {post.userId.userName === userName && (
                     <DeleteComponent
                       postObjId={post._id}
@@ -126,7 +126,7 @@ const Home = () => {
                   )}
                 </div>
 
-                <span style={{ fontSize: "0.8em", color: "#6c757d" }}>
+                <span style={{ fontSize: "0.85em", color: "#95a5a6" }}>
                   {new Intl.DateTimeFormat("en-US", {
                     weekday: "short",
                     year: "numeric",
@@ -135,35 +135,47 @@ const Home = () => {
                   }).format(new Date(post.createdAt))}
                 </span>
 
-                <p className="card-text my-3">{post.message}</p>
+                <p className="card-text my-3" style={{ fontSize: "1.1rem", lineHeight: "1.6", color: "#34495e" }}>{post.message}</p>
 
-                <div className="container d-flex justify-content-between align-items-center p-2">
+                <div className="container d-flex justify-content-around align-items-center p-2" style={{ background: "rgba(0,0,0,0.02)", borderRadius: "10px" }}>
                   <div className="d-flex align-items-center">
-                    <AiOutlineLike size={20} />{" "}
-                    <span className="ms-1">{post.likeCount}</span>
+                    <AiOutlineLike size={22} color="#e74c3c" />{" "}
+                    <span className="ms-2" style={{ fontWeight: "500" }}>{post.likeCount}</span>
                   </div>
                   <div className="d-flex align-items-center">
-                    <LiaCommentSolid size={20} />{" "}
-                    <span className="ms-1">{post.comments.length}</span>
+                    <LiaCommentSolid size={22} color="#3498db" />{" "}
+                    <span className="ms-2" style={{ fontWeight: "500" }}>{post.comments.length}</span>
                   </div>
                 </div>
 
                 <div className="btns text-center mt-3">
                   <button
                     onClick={() => handleLike(post._id)}
-                    className={`btn m-1 btn-outline-dark ${styles["lbtn"]} rounded-pill`}
-                    style={{ minWidth: "90px" }}
+                    className={`btn m-1 ${styles["lbtn"]} rounded-pill`}
+                    style={{ 
+                      minWidth: "90px",
+                      background: post.likes.includes(userId) ? "#e74c3c" : "#fff",
+                      color: post.likes.includes(userId) ? "#fff" : "#e74c3c",
+                      border: "2px solid #e74c3c",
+                      fontWeight: "500"
+                    }}
                   >
                     {post.likes.includes(userId) ? "Unlike 👎" : "Like 👍"}
                   </button>
 
                   <button
                     type="button"
-                    className={`btn m-1 btn-outline-dark ${styles["rbtn"]} rounded-pill`}
+                    className={`btn m-1 ${styles["rbtn"]} rounded-pill`}
                     onClick={() => handleOpenModal(post)}
-                    style={{ minWidth: "90px" }}
+                    style={{ 
+                      minWidth: "90px",
+                      background: "#3498db",
+                      color: "#fff",
+                      border: "2px solid #3498db",
+                      fontWeight: "500"
+                    }}
                   >
-                    Comment
+                    Comment 💬
                   </button>
                 </div>
               </div>
@@ -172,71 +184,72 @@ const Home = () => {
         </div>
       ) : (
         <div className="container mt-5 d-flex justify-content-center align-items-center p-3 flex-column">
-          <div className="card shadow-sm rounded-lg w-75">
-            <div className="card-body text-center">
+          <div className="card shadow-lg rounded-lg w-75" style={{ border: "none", background: "rgba(255, 255, 255, 0.95)", backdropFilter: "blur(10px)" }}>
+            <div className="card-body text-center py-5">
               <h5
                 className="card-title mb-3"
                 style={{
-                  fontFamily: "cursive",
-                  fontSize: "2rem",
-                  color: "#6c757d",
+                  fontFamily: "Barlow",
+                  fontSize: "2.5rem",
+                  color: "#34495e",
+                  fontWeight: "600"
                 }}
               >
-                No posts yet 🍃🍃
+                No posts yet 🍃
               </h5>
+              <p
+                style={{
+                  fontFamily: "PT Sans",
+                  fontSize: "1.1rem",
+                  color: "#7f8c8d",
+                  marginTop: "20px"
+                }}
+              >
+                Try following some people or create your own post to get started!
+              </p>
             </div>
           </div>
-          <p
-            className="alert alert-info mt-3 text-center w-75 mx-auto"
-            style={{
-              fontFamily: "cursive",
-              fontSize: "1rem",
-              color: "#495057",
-            }}
-          >
-            Try following some people or create your own
-          </p>
         </div>
       )}
 
       {activePost && (
         <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", color: "#fff", border: "none" }}>
           <Modal.Title style={{ fontFamily: "PT Sans", fontSize: "1.5rem", fontWeight: "bold" }}>
             {activePost.userId.userName}'s Post
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ background: "#f8f9fa" }}>
           {/* Post Details Card */}
-          <div className="card shadow-sm rounded-lg mb-4" style={{ fontFamily: "PT Sans" }}>
+          <div className="card shadow-sm rounded-lg mb-4" style={{ fontFamily: "PT Sans", border: "none" }}>
             <div className="card-body">
-              <h5 className="card-title mb-3" style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+              <h5 className="card-title mb-3" style={{ fontWeight: "bold", fontSize: "1.2rem", color: "#2c3e50" }}>
                 {activePost.userId.userName}
               </h5>
-              <p className="card-text mb-3">{activePost.message}</p>
-              <div className="d-flex justify-content-between mb-3">
+              <p className="card-text mb-3" style={{ fontSize: "1.05rem", lineHeight: "1.6", color: "#34495e" }}>{activePost.message}</p>
+              <div className="d-flex justify-content-around mb-3 p-2" style={{ background: "rgba(0,0,0,0.03)", borderRadius: "8px" }}>
                 <div className="likes d-flex align-items-center">
-                  <AiOutlineLike size={20} className="me-1" /> <span>{activePost.likeCount}</span>
+                  <AiOutlineLike size={20} className="me-1" color="#e74c3c" /> <span style={{ fontWeight: "500" }}>{activePost.likeCount}</span>
                 </div>
                 <div className="comments d-flex align-items-center">
-                  <LiaCommentSolid size={20} className="me-1" /> <span>{activePost.comments.length}</span>
+                  <LiaCommentSolid size={20} className="me-1" color="#3498db" /> <span style={{ fontWeight: "500" }}>{activePost.comments.length}</span>
                 </div>
               </div>
             </div>
           </div>
       
           {/* Comments Section */}
-          <div className="card shadow-sm rounded-lg mb-4">
+          <div className="card shadow-sm rounded-lg mb-4" style={{ border: "none" }}>
             <ul className="list-group list-group-flush">
               {activePost.comments.length > 0 ? (
                 activePost.comments.map((comment, commentIndex) => (
                   <li
                     key={commentIndex}
                     className="list-group-item p-3"
-                    style={{ fontFamily: "PT Sans", fontSize: "1rem" }}
+                    style={{ fontFamily: "PT Sans", fontSize: "1rem", border: "none", borderBottom: "1px solid #ecf0f1" }}
                   >
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <h6 className="card-title mb-0">{comment.userId.userName}</h6>
+                      <h6 className="card-title mb-0" style={{ fontWeight: "600", color: "#2c3e50" }}>{comment.userId.userName}</h6>
                       {comment.userId.userName === userName && (
                         <CommentDeleter
                           commentId={comment._id}
@@ -247,7 +260,7 @@ const Home = () => {
                       )}
                     </div>
       
-                    <span style={{ fontSize: "0.8em", color: "#6c757d" }}>
+                    <span style={{ fontSize: "0.8em", color: "#95a5a6" }}>
                       {new Intl.DateTimeFormat("en-US", {
                         weekday: "short",
                         year: "numeric",
@@ -257,13 +270,12 @@ const Home = () => {
                         minute: "numeric",
                       }).format(new Date(comment.createdAt))}
                     </span>
-                    <p className="card-text mt-2">{comment.message}</p>
-                    <hr />
+                    <p className="card-text mt-2" style={{ color: "#34495e" }}>{comment.message}</p>
                   </li>
                 ))
               ) : (
-                <h5 className="text-center p-2" style={{ fontFamily: "Barlow", color: "#6c757d" }}>
-                  No comments yet
+                <h5 className="text-center p-4" style={{ fontFamily: "Barlow", color: "#95a5a6" }}>
+                  No comments yet 💭
                 </h5>
               )}
             </ul>
@@ -276,21 +288,26 @@ const Home = () => {
               onChange={(e) => setComment(e.target.value)}
               type="text"
               className="form-control"
-              placeholder="Enter a comment"
+              placeholder="Write a comment..."
               aria-label="Example text with button addon"
               aria-describedby="button-addon1"
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: "25px", padding: "12px 20px", border: "2px solid #e0e0e0" }}
             />
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal} className="rounded-pill">
+        <Modal.Footer style={{ border: "none", background: "#f8f9fa" }}>
+          <Button variant="secondary" onClick={handleCloseModal} className="rounded-pill" style={{ paddingLeft: "25px", paddingRight: "25px" }}>
             Close
           </Button>
           <Button
-            variant="primary"
             onClick={() => handleComment(activePost._id)}
             className="rounded-pill"
+            style={{ 
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              border: "none",
+              paddingLeft: "25px",
+              paddingRight: "25px"
+            }}
           >
             Comment
           </Button>

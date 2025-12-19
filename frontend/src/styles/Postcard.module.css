@@ -3,6 +3,14 @@
     font-weight: 300;
     width: 40vw;
     font-size: 1.7rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.postCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
 }
 
 .smallPostCard{
@@ -10,14 +18,26 @@
     font-weight: 300;
     width: 38vw;
     font-size: 1.7rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
 }
 
 .lbtn{
     width: 45%;
+    transition: all 0.3s ease;
+}
+
+.lbtn:hover {
+    transform: scale(1.05);
 }
 
 .rbtn{
     width: 45%;
+    transition: all 0.3s ease;
+}
+
+.rbtn:hover {
+    transform: scale(1.05);
 }
 
 @media screen and (max-width: 690px) {

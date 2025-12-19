@@ -18,7 +18,7 @@ const CommentDeleter = ({ commentId, postObjId, getFunction , setShowModal }) =>
 
     try {
       const response = await axios.delete(
-        `https://socialmedia-app-vxyd.onrender.com/post/comment/${postObjId}/${commentId}`,
+        `http://localhost:3000/post/comment/${postObjId}/${commentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -40,19 +40,36 @@ const CommentDeleter = ({ commentId, postObjId, getFunction , setShowModal }) =>
         style={{ fontSize: "23px", marginTop: "5px", cursor: "pointer" }}
         onClick={handleShow}
       />
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title> Delete Confirmation </Modal.Title>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton style={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "#fff",
+          border: "none"
+        }}>
+          <Modal.Title style={{ fontWeight: "600" }}>Delete Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {" "}
-          Are you sure you want to delete this comment ??{" "}
+        <Modal.Body style={{ padding: "25px", fontSize: "1.1rem", color: "#34495e" }}>
+          Are you sure you want to delete this comment? This action cannot be undone.
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+        <Modal.Footer style={{ border: "none", padding: "20px" }}>
+          <Button 
+            variant="secondary" 
+            onClick={handleClose}
+            className="rounded-pill"
+            style={{ paddingLeft: "25px", paddingRight: "25px" }}
+          >
+            Cancel
           </Button>
-          <Button variant="danger" onClick={handleDelete}>
+          <Button 
+            onClick={handleDelete}
+            className="rounded-pill"
+            style={{
+              background: "#e74c3c",
+              border: "none",
+              paddingLeft: "25px",
+              paddingRight: "25px"
+            }}
+          >
             Delete
           </Button>
         </Modal.Footer>

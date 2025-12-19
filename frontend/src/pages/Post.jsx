@@ -10,7 +10,7 @@ const Post = () => {
     if (message.length != 0) {
       try {
         const response = await axios.post(
-          "https://socialmedia-app-vxyd.onrender.com/api/posts",
+          "http://localhost:3000/api/posts",
           {
             message: message,
           },
@@ -42,42 +42,70 @@ const Post = () => {
       >
         <div
           className="card shadow-lg rounded-lg p-4"
-          style={{ width: "30rem" }}
+          style={{ 
+            width: "30rem",
+            border: "none",
+            background: "rgba(255, 255, 255, 0.95)",
+            backdropFilter: "blur(10px)"
+          }}
         >
           <div className="card-body">
-            <h5 className="card-title mb-3" style={{ fontWeight: "bold" }}>
-              What's on your mind
+            <h5 className="card-title mb-4" style={{ fontWeight: "600", fontSize: "1.8rem", color: "#2c3e50" }}>
+              What's on your mind? 💭
             </h5>
-            <div className="input-group mb-3">
-              <div className="form-floating">
+            <div className="input-group mb-4">
+              <div className="form-floating w-100">
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="form-control"
                   placeholder="Leave a comment here"
                   id="floatingTextarea2"
-                  style={{ height: "100px", borderRadius: "8px" }}
+                  style={{ 
+                    height: "120px", 
+                    borderRadius: "12px",
+                    border: "2px solid #e0e0e0",
+                    fontSize: "1rem"
+                  }}
                 ></textarea>
-                <label htmlFor="floatingTextarea2" style={{ fontSize: "15px" }}>
-                  Share something
+                <label htmlFor="floatingTextarea2" style={{ fontSize: "15px", color: "#7f8c8d" }}>
+                  Share something...
                 </label>
               </div>
             </div>
             <div className="text-center">
               <button
                 onClick={handlePost}
-                className="btn btn-primary w-50 py-2 rounded-pill"
-                style={{ fontWeight: "bold" }}
+                className="btn w-75 py-3 rounded-pill"
+                style={{ 
+                  fontWeight: "600",
+                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  border: "none",
+                  color: "#fff",
+                  fontSize: "1.1rem",
+                  transition: "transform 0.2s ease"
+                }}
+                onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
+                onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
               >
-                Post
+                Post 🚀
               </button>
             </div>
           </div>
         </div>
       </div>
       {status && (
-        <div className="container text-center alert alert-danger mt-4 w-50 mx-auto">
-          {status}
+        <div className="container text-center mt-4 w-50 mx-auto">
+          <div className="alert" style={{
+            background: "rgba(231, 76, 60, 0.9)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "15px",
+            fontWeight: "500",
+            padding: "15px"
+          }}>
+            {status}
+          </div>
         </div>
       )}
     </>
