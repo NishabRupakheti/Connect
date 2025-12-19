@@ -50,6 +50,13 @@ const increaseComment = async (req, res) => {
 
   try {
     const findpost = await Post.findOne({ _id: postObjID });
+    
+    if (!findpost) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+    
     findpost.comments.push({
       userId: userId,
       message: message,
@@ -62,7 +69,11 @@ const increaseComment = async (req, res) => {
       findpost,
     });
   } catch (err) {
-    console.error("Something went wrong on increaseComment ", err);
+    console.error("Error on increaseComment:", err.message);
+    res.status(500).json({
+      message: "Error adding comment",
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 };
 
@@ -72,9 +83,21 @@ const deleteComment = async (req, res) => {
   try {
     const response = await Post.findById(postObjId);
 
+    if (!response) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
     const commentIndex = response.comments.findIndex(
       (comment) => comment._id.toString() === commentId
     );
+
+    if (commentIndex === -1) {
+      return res.status(404).json({
+        message: "Comment not found",
+      });
+    }
 
     response.comments.splice(commentIndex, 1);
 
@@ -84,7 +107,11 @@ const deleteComment = async (req, res) => {
       message: "The comment is deleted",
     });
   } catch (err) {
-    console.error("Error on deleteComment controller", err);
+    console.error("Error on deleteComment controller:", err.message);
+    res.status(500).json({
+      message: "Error deleting comment",
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 };
 

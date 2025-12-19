@@ -7,8 +7,14 @@ const respondConnection = async (req, res) => {
   try {
     const followReq = await connectionModel.findById(requestId);
 
+    if (!followReq) {
+      return res.status(404).json({
+        message: "Follow request not found",
+      });
+    }
+
     if (followReq.following.toString() !== userId) {
-      res.status(403).json({
+      return res.status(403).json({
         message: "Unauthorized!!", 
       });
     }
@@ -16,20 +22,25 @@ const respondConnection = async (req, res) => {
     if (action == "accept") {
       followReq.status = "accepted";
       await followReq.save();
-      res.status(201).json({
+      return res.status(201).json({
         message: "Accepted",
       });
     } else if (action == "reject") {
       followReq.status = "rejected";
       await followReq.deleteOne();
-      res.status(201).json({
+      return res.status(201).json({
         message: "Rejected",
+      });
+    } else {
+      return res.status(400).json({
+        message: "Invalid action",
       });
     }
   } catch (err) {
-    console.log("Error on the respond connection function", err);
+    console.error("Error on the respond connection function:", err.message);
     res.status(500).json({
-      message: "Internal server error"
+      message: "Internal server error",
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
   }
 };

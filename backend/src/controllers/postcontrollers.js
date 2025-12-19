@@ -23,9 +23,10 @@ const getRequestHandler = async (req, res) => {
       userId: userId,
     });
   } catch (err) {
-    console.error("Error in get request handler", err);
-    res.json({
+    console.error("Error in get request handler:", err.message);
+    res.status(500).json({
       message: "Error fetching the data",
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
   }
 };

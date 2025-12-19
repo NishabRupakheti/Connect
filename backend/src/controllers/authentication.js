@@ -10,7 +10,7 @@ const register = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(409).json({
+      return res.status(409).json({
         message: "User already found",
       });
     }
@@ -25,7 +25,11 @@ const register = async (req, res) => {
       message: "User registered successfully",
     });
   } catch (err) {
-    console.error("Error in register function", err);
+    console.error("Error in register function:", err.message);
+    res.status(500).json({
+      message: "Server error during registration",
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 };
 
